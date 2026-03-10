@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 public class Add implements Comparable<Add>{
     private String company;
     private String position;
-    private LocalDate date; // 仅修改：String → LocalDate（排序必需）
+    private LocalDate date; 
     private String status;
 
     public Add (String company, String position, String dateStr) {
