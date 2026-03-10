@@ -1,14 +1,32 @@
 package seedu.duke;
 
 import task.Add;
+
 import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Duke {
     /**
+     * Method for listing all the applications
+     *
+     * @param applications
+     */
+    private static void listApplications(ArrayList<Add> applications) {
+        if (applications.isEmpty()) {
+            System.out.println("There is no application yet.");
+        } else {
+            System.out.println("Here are your applications:");
+            int index = 0;
+            for (Add app : applications) {
+                System.out.println((index + 1) + ". " + applications.get(index));
+                index++;
+            }
+        }
+    }
+
+    /**
      * Main entry-point for the java.duke.Duke application.
      */
-
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -18,7 +36,7 @@ public class Duke {
         System.out.println("Hello from\n" + logo);
 
         System.out.println("Welcome to Job Application Tracker!");
-        System.out.println("Commands: add | bye");
+        System.out.println("Commands: add | list | bye");
         System.out.println("Format: add c/COMPANY p/POSITION d/DATE");
         System.out.println("Example: add c/Google p/Software Engineer Intern d/2024-09-12");
 
@@ -56,11 +74,13 @@ public class Duke {
                 Add app = new Add(company, position, date);
                 applications.add(app);
 
-                System.out.println("Added: " + company + " | " + position + " | " + date + " | Pending");
+                System.out.println("Added: " + app);
                 System.out.println("You have " + applications.size() + " application(s)");
 
+            } else if (input.equals("list")) {
+                listApplications(applications);
             } else {
-                System.out.println("Unknown command. Use: add or bye");
+                System.out.println("Unknown command. Use: add or list or bye");
             }
         }
 

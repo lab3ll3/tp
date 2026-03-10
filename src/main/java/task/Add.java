@@ -1,5 +1,8 @@
 package task;
 
+/**
+ * Class for adding an application to the list
+ */
 public class Add {
     private String company;
     private String position;
