@@ -11,9 +11,23 @@ Format: add c/COMPANY p/POSITION d/DATE
 Example: add c/Google p/Software Engineer Intern d/2024-09-12
 > Added: Google | SE manager | 2025-03-10 | Pending
 You have 1 application(s)
+> Added: Amazon | Data Analyst | 2025-03-08 | Pending
+You have 2 application(s)
+> Added: Microsoft | SDE Intern | 2025-03-12 | Pending
+You have 3 application(s)
 > Here are your applications:
 1. Google | SE manager | 2025-03-10 | Pending
+2. Amazon | Data Analyst | 2025-03-08 | Pending
+3. Microsoft | SDE Intern | 2025-03-12 | Pending
+> Sorted by submission date!
+Here are your applications:
+1. Amazon | Data Analyst | 2025-03-08 | Pending
+2. Google | SE manager | 2025-03-10 | Pending
+3. Microsoft | SDE Intern | 2025-03-12 | Pending
 > Deleted application:
-Google | SE manager | 2025-03-10 | Pending
-You have 0 application(s) left.
-> Bye! You added 0 application(s).
+Amazon | Data Analyst | 2025-03-08 | Pending
+You have 2 application(s) left.
+> Here are your applications:
+1. Google | SE manager | 2025-03-10 | Pending
+2. Microsoft | SDE Intern | 2025-03-12 | Pending
+> Bye! You added 2 application(s).
