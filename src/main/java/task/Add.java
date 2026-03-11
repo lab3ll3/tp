@@ -1,9 +1,9 @@
-package task;
+package task; // Matches src/main/java/seedu/duke/task
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 /**
- * Class for adding an application to the list
+ * Represents a job application and provides methods to manage its data.
  */
 public class Add implements Comparable<Add>{
     private String company;
