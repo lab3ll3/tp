@@ -1,13 +1,14 @@
-package seedu.duke;
+package seedu.JobPilot;
 
+import seedu.JobPilot.Exceptions.JobPilotException;
 import task.Add;
 import java.util.Collections;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-public class Duke {
+public class JobPilot {
     /**
-     * Lists all the job applications.
+     * Method for listing all the applications
      *
      * @param applications
      */
@@ -73,8 +74,9 @@ public class Duke {
         }
     }
 
+
     /**
-     * Main entry-point for the java.duke.Duke application.
+     * Main entry-point for the java.JobPilot.JobPilot application.
      */
     public static void main(String[] args) {
         String logo = ""
@@ -85,8 +87,8 @@ public class Duke {
                 + " \\___/  \\___/ |____/ |_|    |___||_____| \\___/   |_|  \n";
         System.out.println("Hello from\n" + logo);
 
-        System.out.println("Welcome to Job Application Tracker!");
-        System.out.println("Commands: add | list | sort | status | bye");
+        System.out.println("Welcome to JobPilot!");
+        System.out.println("Commands: add | list | sort | status | delete | bye");
         System.out.println("Format: add c/COMPANY p/POSITION d/DATE");
         System.out.println("Example: add c/Google p/Software Engineer Intern d/2024-09-12");
 
@@ -129,17 +131,57 @@ public class Duke {
 
             } else if (input.equals("list")) {
                 listApplications(applications);
-            } else if (input.equals("sort")){
+            } else if (input.equals("sort")) {
                 sortApplications(applications);
             } else if (input.startsWith("status ")) {
                 updateStatus(applications, input);
+            } else if (input.startsWith("delete")) {
+                try {
+                    deleteApplication(input, applications);
+                } catch (JobPilotException e) {
+                    System.out.println(e.getMessage());
+                }
             } else {
-                System.out.println("Unknown command. Use: add or list or sort or bye");
+                System.out.println("Unknown command. Use: add or list or sort or status or delete or bye");
             }
         }
 
         in.close();
     }
+
+    /**
+     * Deletes an application from the list using the index provided by the user.
+     *
+     * @param input The full user command (e.g., "delete 2").
+     * @param applications The list storing all job applications.
+     * @throws NumberFormatException If the index provided is not a valid integer.
+     */
+
+    private static void deleteApplication(String input, ArrayList<Add> applications) throws JobPilotException {
+        try {
+            String[] parts = input.split(" ");
+
+            if (parts.length < 2) {
+                throw new JobPilotException("Please provide an index. Example: delete 1");
+            }
+
+            int deleteIndex = Integer.parseInt(parts[1]) - 1;
+
+            if (deleteIndex < 0 || deleteIndex >= applications.size()) {
+                throw new JobPilotException("Invalid application number!");
+            }
+
+            Add removed = applications.remove(deleteIndex);
+
+            System.out.println("Deleted application:");
+            System.out.println(removed);
+            System.out.println("You have " + applications.size() + " application(s) left.");
+
+        } catch (NumberFormatException e) {
+            throw new JobPilotException("Invalid format! Use: delete INDEX");
+        }
+    }
 }
+
 
 
