@@ -11,7 +11,7 @@ public class Add implements Comparable<Add>{
     private LocalDate date; 
     private String status;
 
-    public Add (String company, String position, String dateStr) {
+    public Add(String company, String position, String dateStr) {
         this.company = company;
         this.position = position;
         this.date = LocalDate.parse(dateStr, DateTimeFormatter.ISO_LOCAL_DATE);
