@@ -1,6 +1,6 @@
-package seedu.JobPilot;
+package jobpilot;
 
-import seedu.JobPilot.Exceptions.JobPilotException;
+import exception.JobPilotException;
 import task.Add;
 import task.Delete;
 
@@ -121,7 +121,7 @@ public class JobPilot {
 
 
     /**
-     * Main entry-point for the java.JobPilot.JobPilot application.
+     * Main entry-point for the application.
      */
     public static void main(String[] args) {
         String logo = ""
@@ -172,13 +172,12 @@ public class JobPilot {
     }
 
     /**
-     * Deletes an application from the list using the index provided by the user by invoking the Delete class.
+     * Deletes an application from the list by parsing the index provided by the user.
      *
      * @param input The full user command (e.g., "delete 2").
      * @param applications The list storing all job applications.
-     * @throws NumberFormatException If the index provided is not a valid integer.
+     * @throws JobPilotException If the index provided is not a valid integer.
      */
-
     private static void deleteApplication(String input, ArrayList<Add> applications) throws JobPilotException {
         try {
             Delete.deleteApplication(input, applications);
