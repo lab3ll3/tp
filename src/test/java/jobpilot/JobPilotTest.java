@@ -187,7 +187,6 @@ public class JobPilotTest {
         ArrayList<Add> emptyApps = new ArrayList<>();
 
         JobPilot.searchByCompany(emptyApps, "search Google");
-
         String output = outContent.toString().trim();
         assertEquals("No applications to search!", output);
     }
