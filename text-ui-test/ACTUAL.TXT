@@ -42,4 +42,6 @@ You have 2 application(s) left.
 Here are your applications:
 1. Google | SE manager | 2025-03-10 | OFFER (Note: Negotiate salary) | Tags: [TECH]
 2. Microsoft | SDE Intern | 2025-03-12 | PENDING (Note: Waiting for reply) | Tags: [TECH, INTERN]
+Found 1 application(s) matching 'google':
+1. Google | SE manager | 2025-03-10 | OFFER (Note: Negotiate salary) | Tags: [TECH]
 Bye! You added 2 application(s).
