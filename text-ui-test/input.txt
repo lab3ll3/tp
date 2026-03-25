@@ -1,3 +1,4 @@
+help
 add c/Google p/SE manager d/2025-03-10
 add c/Amazon p/Data Analyst d/2025-03-08
 add c/Microsoft p/SDE Intern d/2025-03-12

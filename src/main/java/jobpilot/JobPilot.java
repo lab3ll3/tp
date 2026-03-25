@@ -3,7 +3,8 @@ package jobpilot;
 import exception.JobPilotException;
 import task.Add;
 import task.Delete;
-import task.IndustryTag; 
+import task.Help;
+import task.IndustryTag;
 
 import java.time.format.DateTimeParseException;
 import java.util.Collections;
@@ -289,7 +290,7 @@ public class JobPilot {
 
         System.out.println("Hello from\n" + logo);
         System.out.println("Welcome to JobPilot!");
-        System.out.println("Commands: add | list | search | sort | status | tag | delete | bye");
+        System.out.println("Type 'help' to see all available commands!");
 
         Scanner in = new Scanner(System.in);
         ArrayList<Add> applications = new ArrayList<>();
@@ -300,6 +301,8 @@ public class JobPilot {
             if (input.equals("bye")) {
                 System.out.println("Bye! You added " + applications.size() + " application(s).");
                 break;
+            } else if (input.equals("help")) {
+                Help.showHelpMessage();
             } else if (input.startsWith("add")) {
                 try {
                     addApplication(applications, input);
@@ -327,7 +330,7 @@ public class JobPilot {
                     System.out.println(e.getMessage());
                 }
             } else {
-                System.out.println("Unknown command. Use: add | list | search | sort | status | tag | delete | bye");
+                System.out.println("Unknown command. Use 'help' to see all available commands !");
             }
         }
         in.close();
