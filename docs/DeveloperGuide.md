@@ -31,22 +31,6 @@ The Edit application feature is implemented through a Edit class:
 6.	Validate date format before setting
 7.	Display updated application
 
-**Sequence Diagram** (command: edit 1 c/Google p/SWE d/2024-09-12):
-
-| Component | Method Call | Data Flow |
-|------|-------------|-----------|
-| User | `edit 1 c/Google p/SWE d/2024-09-12` | → JobPilot |
-| JobPilot | `editApplication(input, applications)` | → Edit |
-| Edit | `parseIndex()` | index = 0 |
-| Edit | `applications.get(0)` | ← target application |
-| Edit | `parseFields()` | c/, p/, d/ detected |
-| Edit | `setCompany("Google")` | → Add |
-| Edit | `setPosition("SWE")` | → Add |
-| Edit | `validateDate("2024-09-12")` | valid |
-| Edit | `setDate("2024-09-12")` | → Add |
-| Edit | return success | → JobPilot |
-| JobPilot | display result | → User |
-
 **Error Handling**
 
 | Error Scenario | Condition | User Response |
@@ -55,6 +39,9 @@ The Edit application feature is implemented through a Edit class:
 | Invalid Index | Index is 0, negative, or exceeds list size | "Invalid application number! You have X application(s)." |
 | No Fields | User provides index but no fields to update | "No valid fields to update! Use: c/, p/, d/, s/" |
 | Invalid Date Format | Date not in `YYYY-MM-DD` format | "Invalid date! Use YYYY-MM-DD (e.g., 2024-09-12)" |
+
+**Sequence Diagram** 
+![Sequence](diagrams/edit/sequence.png)
 
 **Design Rationale**
 
