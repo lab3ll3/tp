@@ -109,6 +109,135 @@ The following sequence diagram shows the flow of deleting an application:
   * *Pros:* Separates concerns, making the deletion logic purely functional, highly cohesive, and significantly easier to test.
   * *Cons:* Requires refactoring the current architecture, which is difficult due to the given time constraints.
 
+### Search by Company Feature
+
+#### Implementation Details
+
+The **Search by Company** feature allows users to retrieve job applications by matching a company name using a **case-insensitive partial search**. This feature is implemented directly within the `JobPilot` class through the method:
+
+* `JobPilot#searchByCompany(ArrayList<Add>, String)`
+
+The application's data is stored in a central `ArrayList<Add>` named `applications`, where each `Add` object represents a job application.
+
+The search operation works by iterating through the list and checking whether each application's company name contains the user-provided search keyword.
+
+---
+
+Given below is an example usage scenario demonstrating how the search mechanism behaves at each step.
+
+**Step 1.** The user executes `search google`. The `Scanner` inside the `JobPilot.main()` loop reads the raw input string.
+
+**Step 2.** The `if-else` execution block in `JobPilot.main()` recognizes the `search` command and routes execution to the `JobPilot#searchByCompany()` method.
+
+**Step 3.** Inside `searchByCompany`, the system extracts the search keyword using:
+`String searchTerm = input.substring("search ".length()).trim();`
+If the search term is empty, an error message is shown. If the application list is empty, the system informs the user that there are no applications to search.
+
+**Step 4.** The method iterates through all applications and performs a case-insensitive partial match:
+```
+for (Add application : applications) {
+    if (application.getCompany().toLowerCase().contains(searchTerm.toLowerCase())) {
+        results.add(application);
+    }
+}
+```
+
+
+**Step 5.** The results are displayed to the user. If no matches are found, the system prints a corresponding message. Otherwise, all matching applications are listed.
+
+---
+
+The following sequence diagram shows the flow of searching by company:
+
+```
+@startuml
+actor User
+participant JobPilot
+participant "ArrayList<Add>" as AppList
+participant Add
+
+User -> JobPilot : input "search google"
+JobPilot -> JobPilot : searchByCompany(applications, input)
+
+JobPilot -> JobPilot : extract searchTerm
+
+loop for each application
+    JobPilot -> Add : getCompany()
+    Add --> JobPilot : company name
+    JobPilot -> JobPilot : compare (contains)
+end
+
+JobPilot -> User : display results
+@enduml
+```
+
+**Sequence Diagram** (command: search google):
+
+| Component | Method Call | Data Flow |
+|------|-------------|-----------|
+| User | `search google` | → JobPilot |
+| JobPilot | `searchByCompany(applications, input)` | → JobPilot |
+| JobPilot | `extract searchTerm` | searchTerm = "google" |
+| JobPilot | iterate applications | → ArrayList |
+| JobPilot | `getCompany()` | ← Add |
+| JobPilot | `toLowerCase().contains()` | match check |
+| JobPilot | add to results | → results list |
+| JobPilot | return results | → JobPilot |
+| JobPilot | display results | → User |
+
+---
+
+**Error Handling**
+
+| Error Scenario | Condition | User Response |
+|----------------|-----------|---------------|
+| Empty Search Term | User enters `search` without keyword | "Please provide a company name to search. Example: search google" |
+| No Applications | Application list is empty | "No applications to search!" |
+| No Match Found | No company matches the keyword | "No applications found for company: [keyword]" |
+| Invalid Format | Input parsing fails unexpectedly | "Invalid search format! Use: search COMPANY_NAME" |
+
+---
+
+**Design Rationale**
+
+| Decision | Rationale |
+|----------|----------|
+| Implement search in `JobPilot` | Keeps implementation simple and avoids unnecessary abstraction |
+| Case-insensitive matching | Improves usability by allowing flexible input |
+| Partial matching using `contains()` | Allows users to search with incomplete company names |
+| Linear search on `ArrayList` | Sufficient for small datasets and easy to implement |
+| Direct result printing | Simplifies control flow without introducing additional layers |
+
+#### Design Considerations
+
+**Aspect: Search logic placement**
+
+* **Current Implementation:** The search logic is implemented directly inside the `JobPilot` class.
+    * *Pros:* Simple and straightforward, easy to integrate with the main command loop.
+    * *Cons:* Mixes UI logic and business logic, making the method harder to test and reuse.
+
+---
+
+**Aspect: Matching strategy**
+
+* **Current Implementation:** Uses case-insensitive partial matching via `toLowerCase().contains()`.
+    * *Pros:* Flexible and user-friendly, supports partial input (e.g., "goo" matches "Google").
+    * *Cons:* Less efficient for large datasets and limited to simple substring matching.
+
+* **Alternative:** Use exact matching with `equalsIgnoreCase()`.
+    * *Pros:* More precise and slightly more efficient.
+    * *Cons:* Too strict for user input, reduces usability.
+
+---
+
+#### Future Improvements
+
+- Support multi-field search (e.g., company + position)
+- Implement fuzzy search to handle typos
+- Introduce indexing for faster lookup in large datasets
+- Separate search logic into its own component for better modularity
+
+
 ## Product scope
 ### Target user profile
 
@@ -150,3 +279,13 @@ The following sequence diagram shows the flow of deleting an application:
 | No fields     | `edit 1` | Error: no fields to update |
 | Invalid date  | `edit 1 d/2024-13-01` | Error: invalid date format |
 
+### Search by Company Feature Testing
+
+| Test | Command | Expected |
+|------|--------|----------|
+| No match | `search Microsoft` | Prints "No applications found for company: Microsoft" |
+| Exact match | `search Google` | Shows 1 result with Google application only |
+| Partial match | `search Go` | Shows multiple results (e.g., Google, GoGoTravel) |
+| Case insensitive | `search GOOGLE` | Matches "Google" successfully |
+| Empty search term | `search ` | Error: "Please provide a company name to search" |
+| Empty list | `search Google` (no applications) | "No applications to search!" |
