@@ -72,6 +72,10 @@ public class CommandRunner {
             }
             break;
 
+        case FILTER:
+            Filterer.filterByStatus(applications, cmd.searchTerm, null);
+            break;
+
         case SORT:
             Collections.sort(applications);
             Ui.showSortedMessage();

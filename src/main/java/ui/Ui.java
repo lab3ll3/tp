@@ -124,6 +124,23 @@ public class Ui {
     }
 
     /**
+     * Displays the results of a status filter operation.
+     * If no results are found, it informs the user. Otherwise, it prints
+     * the count and delegates to showApplicationList to display the details.
+     *
+     * @param results The list of applications matching the filter criteria.
+     * @param status The status string used for the filter.
+     */
+    public static void showFilterResults(ArrayList<Application> results, String status) {
+        if (results.isEmpty()) {
+            System.out.println("No applications found with status: " + status);
+        } else {
+            System.out.println("Found " + results.size() + " application(s) with status '" + status + "':");
+            showApplicationList(results);
+        }
+    }
+
+    /**
      * Displays a message indicating that applications have been sorted.
      */
     public static void showSortedMessage() {

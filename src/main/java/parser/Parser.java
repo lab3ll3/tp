@@ -3,6 +3,9 @@ package parser;
 import exception.JobPilotException;
 import parser.subparsers.*;
 
+/**
+ * Main parser that routes commands to appropriate subparsers.
+ */
 public class Parser {
 
     public static ParsedCommand parse(String input) {
@@ -27,6 +30,12 @@ public class Parser {
             case "add":
                 try {
                     return ApplicationParser.parse(trimmed);
+                } catch (JobPilotException e) {
+                    return new ParsedCommand(CommandType.ERROR, e.getMessage());
+                }
+            case "filter":
+                try {
+                    return FilterParser.parse(trimmed);
                 } catch (JobPilotException e) {
                     return new ParsedCommand(CommandType.ERROR, e.getMessage());
                 }
