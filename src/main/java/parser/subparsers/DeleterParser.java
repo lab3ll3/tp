@@ -3,12 +3,19 @@ package parser.subparsers;
 import exception.JobPilotException;
 import parser.ParsedCommand;
 
+// @@ author abigailtong
 /**
  * Parses the delete command.
- * Format: delete INDEX
  */
 public class DeleterParser {
 
+    /**
+     * Parses the delete command input provided by the user and converts it into a ParsedCommand.
+     *
+     * @param input The full user input string for the delete command.
+     * @return ParsedCommand containing the zero-based index of the application to delete.
+     * @throws JobPilotException If the input does not contain an index or if the index is not a valid integer.
+     */
     public static ParsedCommand parse(String input) throws JobPilotException {
         String[] parts = input.split(" ");
         if (parts.length < 2) {
