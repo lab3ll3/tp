@@ -34,6 +34,7 @@ The following diagram illustrates how the parser processes a typical `edit` comm
 
 ![Parser Flow](diagrams/component-parser/parser-flow.png)
 *Figure 2: Parser Flow for Edit Command*
+
 ### Storage Component
 
 The **API** of this component is specified in `Storage.java`.
@@ -98,6 +99,7 @@ The following diagram illustrates how the `CommandRunner` processes different co
 | Validation before delegation | Ensures invalid commands never reach domain logic, improving robustness |
 | Return boolean flag | Simple mechanism to control main loop continuation without exceptions |
 | Switch statement over mapping | Simple, readable, and sufficient for the number of command types |
+
 ## Implementation
 
 ### Edit Application Feature
