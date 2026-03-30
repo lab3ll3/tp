@@ -7,6 +7,18 @@ Hello from
 
 Welcome to JobPilot!
 Type 'help' to see all available commands!
+3月 30, 2026 6:33:00 下午 task.Application addIndustryTag
+信息: Added tag TECH to application: Apple - SE manager
+3月 30, 2026 6:33:00 下午 task.Application addIndustryTag
+信息: Added tag TECH to application: Apple - SE manager
+3月 30, 2026 6:33:00 下午 task.Application addIndustryTag
+信息: Added tag TECH to application: Microsoft - SDE Intern
+3月 30, 2026 6:33:00 下午 task.Application addIndustryTag
+信息: Added tag TECH to application: Microsoft - SDE Intern
+3月 30, 2026 6:33:00 下午 task.Application addIndustryTag
+信息: Added tag INTERN to application: Microsoft - SDE Intern
+3月 30, 2026 6:33:00 下午 task.Application addIndustryTag
+信息: Added tag INTERN to application: Microsoft - SDE Intern
 Deleted application:
 Apple | SE manager | 2027-01-09 | OFFER (Note: Negotiate salary) | Tags: [TECH]
 You have 1 application(s) left.
@@ -34,10 +46,30 @@ Here are your applications:
 1. Google | SE manager | 2025-03-10 | Pending
 2. Amazon | Data Analyst | 2025-03-08 | Pending
 3. Microsoft | SDE Intern | 2025-03-12 | Pending
+3月 30, 2026 6:33:00 下午 task.Application addIndustryTag
+信息: Added tag TECH to application: Google - SE manager
+3月 30, 2026 6:33:00 下午 task.Application addIndustryTag
+信息: Added tag TECH to application: Google - SE manager
 Added tag: TECH -> Google | SE manager | 2025-03-10 | Pending | Tags: [TECH]
+3月 30, 2026 6:33:00 下午 task.Application addIndustryTag
+信息: Added tag FINANCE to application: Amazon - Data Analyst
+3月 30, 2026 6:33:00 下午 task.Application addIndustryTag
+信息: Added tag FINANCE to application: Amazon - Data Analyst
 Added tag: FINANCE -> Amazon | Data Analyst | 2025-03-08 | Pending | Tags: [FINANCE]
+3月 30, 2026 6:33:00 下午 task.Application addIndustryTag
+信息: Added tag DATA to application: Amazon - Data Analyst
+3月 30, 2026 6:33:00 下午 task.Application addIndustryTag
+信息: Added tag DATA to application: Amazon - Data Analyst
 Added tag: DATA -> Amazon | Data Analyst | 2025-03-08 | Pending | Tags: [FINANCE, DATA]
+3月 30, 2026 6:33:00 下午 task.Application addIndustryTag
+信息: Added tag TECH to application: Microsoft - SDE Intern
+3月 30, 2026 6:33:00 下午 task.Application addIndustryTag
+信息: Added tag TECH to application: Microsoft - SDE Intern
 Added tag: TECH -> Microsoft | SDE Intern | 2025-03-12 | Pending | Tags: [TECH]
+3月 30, 2026 6:33:00 下午 task.Application addIndustryTag
+信息: Added tag INTERN to application: Microsoft - SDE Intern
+3月 30, 2026 6:33:00 下午 task.Application addIndustryTag
+信息: Added tag INTERN to application: Microsoft - SDE Intern
 Added tag: INTERN -> Microsoft | SDE Intern | 2025-03-12 | Pending | Tags: [TECH, INTERN]
 Updated Status: Google | SE manager | 2025-03-10 | OFFER (Note: Negotiate salary) | Tags: [TECH]
 Updated Status: Amazon | Data Analyst | 2025-03-08 | INTERVIEW (Note: Case study prep) | Tags: [FINANCE, DATA]
@@ -55,6 +87,10 @@ Here are your applications:
 1. Amazon | Data Analyst | 2025-03-08 | INTERVIEW (Note: Case study prep) | Tags: [FINANCE, DATA]
 2. Google | SE manager | 2025-03-10 | OFFER (Note: Negotiate salary) | Tags: [TECH]
 3. Microsoft | SDE Intern | 2025-03-12 | PENDING (Note: Waiting for reply) | Tags: [TECH, INTERN]
+3月 30, 2026 6:33:00 下午 task.Application removeIndustryTag
+信息: Removed tag /FINANCE from application: Google - SE manager
+3月 30, 2026 6:33:00 下午 task.Application removeIndustryTag
+信息: Removed tag /FINANCE from application: Google - SE manager
 Removed tag: /FINANCE -> Google | SE manager | 2025-03-10 | OFFER (Note: Negotiate salary) | Tags: [TECH]
 Deleted application:
 Amazon | Data Analyst | 2025-03-08 | INTERVIEW (Note: Case study prep) | Tags: [FINANCE, DATA]

@@ -7,12 +7,26 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Collections;
 import java.util.logging.Logger;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.SimpleFormatter;
 
 /**
  * Represents a job application and provides methods to manage its data.
  */
 
 public class Application implements Comparable<Application> {
+
+    static {
+        System.setProperty("user.language", "en");
+        System.setProperty("user.country", "US");
+
+        Logger rootLogger = Logger.getLogger("");
+        rootLogger.setUseParentHandlers(false);
+        ConsoleHandler handler = new ConsoleHandler();
+        handler.setFormatter(new SimpleFormatter());
+        rootLogger.addHandler(handler);
+    }
+
     private static final Logger logger = Logger.getLogger(Application.class.getName());
     private String company;
     private String position;
