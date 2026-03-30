@@ -1,0 +1,13 @@
+@startuml
+actor User
+participant JobPilot
+
+User -> JobPilot : input "search"
+JobPilot -> JobPilot : searchByCompany(applications, input)
+
+JobPilot -> JobPilot : extract searchTerm
+
+alt searchTerm is empty
+    JobPilot -> User : show error message
+end
+@enduml
