@@ -9,7 +9,7 @@ Welcome to JobPilot!
 Type 'help' to see all available commands!
 Deleted application:
 Apple | SE manager | 2027-01-09 | Pending
-You have 5 application(s) left.
+You have 6 application(s) left.
 Available Commands:
 add c/COMPANY p/POSITION d/DATE                             Add a new job application
 edit INDEX [c/COMPANY] [p/POSITION] [d/DATE] [s/STATUS]     Edit existing application
@@ -33,9 +33,10 @@ Here are your applications:
 3. Microsoft | SDE Intern | 2025-03-12 | PENDING (Note: Waiting for reply) | Tags: [TECH, INTERN]
 4. Microsoft | SDE Intern | 2025-03-12 | Pending
 5. Microsoft | SDE Intern | 2025-03-12 | Pending
-6. Google | SE manager | 2025-03-10 | Pending
-7. Amazon | Data Analyst | 2025-03-08 | Pending
-8. Microsoft | SDE Intern | 2025-03-12 | Pending
+6. Microsoft | SDE Intern | 2025-03-12 | Pending
+7. Google | SE manager | 2025-03-10 | Pending
+8. Amazon | Data Analyst | 2025-03-08 | Pending
+9. Microsoft | SDE Intern | 2025-03-12 | Pending
 Added tag: TECH -> Microsoft | SDE Intern | 2025-03-12 | OFFER (Note: Negotiate salary) | Tags: [TECH, INTERN]
 Added tag: FINANCE -> Microsoft | SDE Intern | 2025-03-12 | INTERVIEW (Note: Case study prep) | Tags: [FINANCE, DATA]
 Added tag: DATA -> Microsoft | SDE Intern | 2025-03-12 | INTERVIEW (Note: Case study prep) | Tags: [FINANCE, DATA]
@@ -46,13 +47,14 @@ Updated Status: Microsoft | SDE Intern | 2025-03-12 | INTERVIEW (Note: Case stud
 Updated Status: Microsoft | SDE Intern | 2025-03-12 | PENDING (Note: Waiting for reply) | Tags: [TECH, INTERN]
 Found 1 application(s) matching 'Google':
 1. Google | SE manager | 2025-03-10 | Pending
-Found 6 application(s) matching 'micro':
+Found 7 application(s) matching 'micro':
 1. Microsoft | SDE Intern | 2025-03-12 | OFFER (Note: Negotiate salary) | Tags: [TECH, INTERN]
 2. Microsoft | SDE Intern | 2025-03-12 | INTERVIEW (Note: Case study prep) | Tags: [FINANCE, DATA]
 3. Microsoft | SDE Intern | 2025-03-12 | PENDING (Note: Waiting for reply) | Tags: [TECH, INTERN]
 4. Microsoft | SDE Intern | 2025-03-12 | Pending
 5. Microsoft | SDE Intern | 2025-03-12 | Pending
 6. Microsoft | SDE Intern | 2025-03-12 | Pending
+7. Microsoft | SDE Intern | 2025-03-12 | Pending
 Sorted by submission date!
 Here are your applications:
 1. Amazon | Data Analyst | 2025-03-08 | Pending
@@ -63,6 +65,7 @@ Here are your applications:
 6. Microsoft | SDE Intern | 2025-03-12 | Pending
 7. Microsoft | SDE Intern | 2025-03-12 | Pending
 8. Microsoft | SDE Intern | 2025-03-12 | Pending
+9. Microsoft | SDE Intern | 2025-03-12 | Pending
 Here are your applications:
 1. Amazon | Data Analyst | 2025-03-08 | Pending
 2. Google | SE manager | 2025-03-10 | Pending
@@ -72,10 +75,11 @@ Here are your applications:
 6. Microsoft | SDE Intern | 2025-03-12 | Pending
 7. Microsoft | SDE Intern | 2025-03-12 | Pending
 8. Microsoft | SDE Intern | 2025-03-12 | Pending
+9. Microsoft | SDE Intern | 2025-03-12 | Pending
 Removed tag: /FINANCE -> Google | SE manager | 2025-03-10 | Pending
 Deleted application:
 Amazon | Data Analyst | 2025-03-08 | Pending
-You have 7 application(s) left.
+You have 8 application(s) left.
 Here are your applications:
 1. Google | SE manager | 2025-03-10 | Pending
 2. Microsoft | SDE Intern | 2025-03-12 | OFFER (Note: Negotiate salary) | Tags: [TECH, INTERN]
@@ -84,6 +88,7 @@ Here are your applications:
 5. Microsoft | SDE Intern | 2025-03-12 | Pending
 6. Microsoft | SDE Intern | 2025-03-12 | Pending
 7. Microsoft | SDE Intern | 2025-03-12 | Pending
+8. Microsoft | SDE Intern | 2025-03-12 | Pending
 Found 1 application(s) matching 'google':
 1. Google | SE manager | 2025-03-10 | Pending
 Updated application:
@@ -98,4 +103,5 @@ Here are your applications:
 5. Microsoft | SDE Intern | 2025-03-12 | Pending
 6. Microsoft | SDE Intern | 2025-03-12 | Pending
 7. Microsoft | SDE Intern | 2025-03-12 | Pending
-Bye! You added 7 application(s).
+8. Microsoft | SDE Intern | 2025-03-12 | Pending
+Bye! You added 8 application(s).
