@@ -167,42 +167,16 @@ results.add(application);
 
 ---
 
-The following sequence diagram shows the flow of searching by company:
-
-@startuml
-actor User
-participant JobPilot
-participant "ArrayList<Add>" as AppList
-participant Add
-
-User -> JobPilot : input "search google"
-JobPilot -> JobPilot : searchByCompany(applications, input)
-
-JobPilot -> JobPilot : extract searchTerm
-
-loop for each application
-JobPilot -> Add : getCompany()
-Add --> JobPilot : company name
-JobPilot -> JobPilot : compare (contains)
-end
-
-JobPilot -> User : display results
-@enduml
-
-
-**Sequence Diagram** (command: search google):
-
-| Component | Method Call | Data Flow |
-|------|-------------|-----------|
-| User | `search google` | → JobPilot |
-| JobPilot | `searchByCompany(applications, input)` | → JobPilot |
-| JobPilot | `extract searchTerm` | searchTerm = "google" |
-| JobPilot | iterate applications | → ArrayList |
-| JobPilot | `getCompany()` | ← Add |
-| JobPilot | `toLowerCase().contains()` | match check |
-| JobPilot | add to results | → results list |
-| JobPilot | return results | → JobPilot |
-| JobPilot | display results | → User |
+#### Sequence Diagrams
+##### Main Success Flow
+The following diagram illustrates the normal execution flow when a user performs a valid search:
+![search_main.png](diagrams/search/search_main.png)
+##### Empty Search Term
+The following diagram shows the system behavior when the user provides an empty search keyword:
+![search_empty.png](diagrams/search/search_empty.png)
+##### No Match Found
+The following diagram illustrates the case where no applications match the search keyword:
+![search_nomatch.png](diagrams/search/search_nomatch.png)
 
 ---
 
@@ -255,6 +229,8 @@ JobPilot -> User : display results
 - Implement fuzzy search to handle typos
 - Introduce indexing for faster lookup in large datasets
 - Separate search logic into its own component for better modularity
+
+---
 
 ### Sort Application Feature
 

@@ -1,0 +1,21 @@
+@startuml
+actor User
+participant JobPilot
+participant "ArrayList<Add>" as AppList
+participant Add
+
+User -> JobPilot : input "search google"
+JobPilot -> JobPilot : searchByCompany(applications, input)
+
+loop for each application
+    JobPilot -> Add : getCompany()
+    Add --> JobPilot : company
+    JobPilot -> JobPilot : compare
+end
+
+alt no matches found
+    JobPilot -> User : "No applications found"
+else matches found
+    JobPilot -> User : display results
+end
+@enduml
