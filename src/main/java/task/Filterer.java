@@ -1,5 +1,6 @@
 package task;
 
+import exception.JobPilotException;
 import ui.Ui;
 import java.util.ArrayList;
 import java.util.logging.Logger;
@@ -15,36 +16,60 @@ public class Filterer {
     private static final Logger LOGGER = Logger.getLogger(Filterer.class.getName());
 
     /**
-     * Filters applications by the given status string.
+     * Filters applications by the given status string with enhanced validation.
      *
      * @param applications The master list of applications.
      * @param statusQuery  The status to search for (e.g., "OFFER").
-     * @param ui           The UI instance to handle output.
+     * @throws JobPilotException if input is invalid
      */
-    public static void filterByStatus(ArrayList<Application> applications, String statusQuery, Ui ui) {
+    public static void filterByStatus(ArrayList<Application> applications, String statusQuery) throws JobPilotException {
         // V2.0 REQUIREMENT: Assertions
         assert applications != null : "The applications list should not be null";
-        assert ui != null : "The UI component should be initialized";
 
-        LOGGER.log(Level.INFO, "Filtering applications for status: " + statusQuery);
+        if (statusQuery == null || statusQuery.isBlank()) {
+            throw new JobPilotException("Status filter cannot be empty. Use: filter status/OFFER");
+        }
+
+        String normalizedQuery = statusQuery.trim().toUpperCase();
+
+        if (normalizedQuery.length() < 2) {
+            throw new JobPilotException("Status keyword is too short! Minimum 2 characters required.");
+        }
+
+        LOGGER.log(Level.INFO, "Filtering applications for status: " + normalizedQuery);
 
         ArrayList<Application> filteredResults = new ArrayList<>();
 
         for (Application app : applications) {
             // Defensive check: ensure the app and its status aren't null
             if (app != null && app.getStatus() != null) {
-                // Using contains and toUpperCase makes it more flexible for the user
-                if (app.getStatus().toUpperCase().contains(statusQuery.toUpperCase())) {
+                if (app.getStatus().toUpperCase().contains(normalizedQuery)) {
                     filteredResults.add(app);
                 }
             }
         }
 
         if (filteredResults.isEmpty()) {
-            LOGGER.log(Level.WARNING, "No matches found for status: " + statusQuery);
+            LOGGER.log(Level.WARNING, "No matches found for status: " + normalizedQuery);
         }
 
-        Ui.showFilterResults(filteredResults, statusQuery);
+        showFilterResults(filteredResults, normalizedQuery);
+    }
+
+    /**
+     * Displays formatted filter results with a summary header.
+     */
+    private static void showFilterResults(ArrayList<Application> results, String query) {
+        Ui.showLineSeparator();
+        System.out.println("Filtered by status: " + query);
+        System.out.println("Matching applications: " + results.size());
+        Ui.showLineSeparator();
+
+        if (results.isEmpty()) {
+            System.out.println("No applications matched the given status.");
+        } else {
+            Ui.showApplicationList(results);
+        }
     }
 }
 // @@author
