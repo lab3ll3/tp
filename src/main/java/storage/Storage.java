@@ -136,7 +136,7 @@ public class Storage {
                 writer.write(sb.toString() + System.lineSeparator());
             }
             writer.close();
-            LOGGER.log(Level.INFO, "Exported empty warehouse state.");
+            LOGGER.log(Level.INFO, "Saved application list to file.");
         } catch (IOException e) {
             System.out.println("I could not save your data! " + e.getMessage());
         }

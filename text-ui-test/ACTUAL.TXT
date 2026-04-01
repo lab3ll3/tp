@@ -7,7 +7,6 @@ Hello from
 
 Welcome to JobPilot!
 Type 'help' to see all available commands!
-Invalid application number!
 Available Commands:
 add c/COMPANY p/POSITION d/DATE                             Add a new job application
 edit INDEX [c/COMPANY] [p/POSITION] [d/DATE] [s/STATUS]     Edit existing application
@@ -66,4 +65,10 @@ Apple | SE manager | 2027-01-09 | OFFER (Note: Negotiate salary) | Tags: [TECH]
 Here are your applications:
 1. Apple | SE manager | 2027-01-09 | OFFER (Note: Negotiate salary) | Tags: [TECH]
 2. Microsoft | SDE Intern | 2025-03-12 | PENDING (Note: Waiting for reply) | Tags: [TECH, INTERN]
-Bye! You added 2 application(s).
+Deleted application:
+Microsoft | SDE Intern | 2025-03-12 | PENDING (Note: Waiting for reply) | Tags: [TECH, INTERN]
+You have 1 application(s) left.
+Deleted application:
+Apple | SE manager | 2027-01-09 | OFFER (Note: Negotiate salary) | Tags: [TECH]
+You have 0 application(s) left.
+Bye! You added 0 application(s).

@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Tests for adding applications using CommandRunner and Parser.
  */
-class AddTest {
+class ApplicationTest {
 
     private ArrayList<Application> applications;
     private CommandRunner runner;

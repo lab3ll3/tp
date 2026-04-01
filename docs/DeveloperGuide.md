@@ -2,7 +2,8 @@
 
 ## Acknowledgements
 
-{list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+This project was guided by the [SE-EDU initiative's](https://se-education.org) AddressBook-Level3 (AB3). We took guidance from its core architecture., parser design, 
+and command execution flow to better suit JobPilot.
 
 ## Design
 
@@ -21,7 +22,7 @@ The `UI` component,
 * reads raw user commands from the console.
 * displays formatted messages, search results, and errors to the user based on command execution.
 * operates passively; it relies on the `JobPilot` main loop and `CommandRunner` to invoke its specific display methods (e.g., `showApplicationAdded`, `showSearchResults`).
-* depends on some classes in the `Model` component, as it displays `Application` and `IndustryTag` objects.
+* depends on some classes in the `task` component, as it displays `Application` and `IndustryTag` objects.
 
 ### Parser Component
 
@@ -34,15 +35,16 @@ The following diagram illustrates how the parser processes a typical `edit` comm
 
 ![Parser Flow](diagrams/component-parser/parser-flow.png)
 *Figure 2: Parser Flow for Edit Command*
+
 ### Storage Component
 
 The **API** of this component is specified in `Storage.java`.
 
-![Ui Component](diagrams/component-ui/ui-class.png)
+![Ui Component](diagrams/component-storage/storage-class.png)
 
 The `Storage` component,
 
-* can save job application data in a text format (`.txt`), separated by '|', and read them back into corresponding `Application` objects.
+* can save job application data in a text format (`.txt`), separated by '\|', and read them back into corresponding `Application` objects.
 * handles missing directories or files automatically by creating the necessary `data/JobPilotData.txt` file upon initialization if it does not exist.
 * parses the text file, actively invalidating corrupted or invalid lines during the loading process to ensure the application does not crash upon startup.
 * depends on some classes in the `task` component, because the `Storage` component's primary job is to serialize and deserialize `Application` and `IndustryTag` objects.
@@ -98,6 +100,7 @@ The following diagram illustrates how the `CommandRunner` processes different co
 | Validation before delegation | Ensures invalid commands never reach domain logic, improving robustness |
 | Return boolean flag | Simple mechanism to control main loop continuation without exceptions |
 | Switch statement over mapping | Simple, readable, and sufficient for the number of command types |
+
 ## Implementation
 
 ### Edit Application Feature
@@ -420,7 +423,7 @@ The operations are handled via the following methods:
 
 The following sequence diagram illustrates the flow of filtering applications by status:
 
-![Filter Sequence Diagram](diagrams/filter/sequence_diagram.png)
+![Filter Sequence Diagram](diagrams/filter/sequence.png)
 
 
 #### Design Rationale
@@ -498,7 +501,7 @@ The following sequence diagram illustrates the flow of updating status and notes
 
 ## Product Scope
 ### Target User Profile
-University students and fresh graduates applying for internships or jobs and want to keep track of their applications.
+Computing students applying for jobs and want to keep track of their applications.
 
 ### Value Proposition
 In the current job market, applying to many roles has become the norm. As such, JobPilot acts a
@@ -506,39 +509,32 @@ tracker to allow users to get a bird's eye view of all their applications and ma
 
 ## User Stories
 
-### Version 1.0 (Core Features)
-
-| Version | As a ... | I want to ... | So that I can ... |
-|---------|----------|---------------|-------------------|
-| v1.0 | user | add a job application with company, position, and date | keep track of where I've applied |
-| v1.0 | user | list all my applications | see a summary of my applications |
-| v1.0 | user | delete an application | remove applications I'm no longer interested in |
-
-### Version 2.0 (Enhanced Features)
-
-| Version | As a ... | I want to ... | So that I can ... |
-|---------|----------|---------------|-------------------|
-| v2.0 | user | store my applications persistently | come back to them at different points in time |
-| v2.0 | user | edit an existing application | update details without deleting and re-adding |
-| v2.0 | user | update application status | track my progress through interviews |
-| v2.0 | user | sort applications by submission date | prioritize older applications |
-| v2.0 | user | search applications by company name | locate applications for specific companies |
-| v2.0 | user | add industry tags to applications | categorize applications by industry |
-| v2.0 | user | filter applications by status | focus on applications at a specific stage |
+| Version | As a ... | I want to ...                                                     | So that I can ...                      |
+|------|----------|-------------------------------------------------------------------|----------------------------------------|
+| v1.0 | user | add a job application with company, position, and submission date | keep track of where I have applied     |
+| v1.0 | user | list all my applications                                          | see a summary of my applications       |
+| v1.0 | user | delete applications                                               | manage my application list effectively |
+| v1.0 | user | update application status                                         | track my application progress          |
+| v1.0 | user | sort applications by submission date                              | prioritize older applications          |
+| v2.0 | user | store my applications persistently | come back to it at different points in time                |
+| v2.0 | user | edit an existing application | update details without deleting and re-adding applications |
+| v2.0 | user | search applications by company name | locate applications for specific companies                 |
+| v2.0 | user | add industry tags to applications | categorize applications by industry                        |
+| v2.0 | user | filter applications by status | focus on applications at a specific stage                  |
 
 ## Non-Functional Requirements
 
 ### 1. Performance
-- The application shall respond to any command (add, edit, delete, search, sort, tag, status) within 1 second for up to 500 job applications**.
-- Searching, sorting, and filtering operations shall execute in O(n) time complexity or better, where n is the number of applications.
+- The application shall respond to any command (add, edit, delete, search, sort, tag, status) within **1 second** for up to **500 job applications**.
+- Searching, sorting, and filtering operations shall execute in **O(n)** time complexity or better, where n is the number of applications.
 
 ### 2. Usability
 - Command syntax shall remain consistent with clear prefixes (`c/`, `p/`, `d/`, `s/`, `add/`, `remove/`, `note/`) to minimize user errors.
-- Error messages shall be descriptive and actionable**, guiding users to correct input mistakes.
-- Commands shall support partial input where applicable (e.g., partial company names for search).
+- Error messages shall be **descriptive and actionable**, guiding users to correct input mistakes.
+- Commands shall support **partial input** where applicable (e.g., partial company names for search).
 
 ### 3. Accessibility
-- Command-line outputs shall be **readable with standard font sizes, use clear formatting (tables, line breaks), and avoid color dependence.
+- Command-line outputs shall be **readable with standard font sizes**, use clear formatting (tables, line breaks), and avoid color dependence.
 - Messages shall be concise, avoiding technical jargon when addressing end users.
 
 ## Glossary
@@ -549,13 +545,11 @@ tracker to allow users to get a bird's eye view of all their applications and ma
 
 ## Instructions for manual testing
 
-{Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing}
-
 ## Initial Launch
 1. Use the provided `JobPilot.jar`.
 2. Place the jar in an empty folder.
-3. **Double-click the jar file**  
-   **Expected:** JobPilot launches. The CLI prompt appears showing either an empty list or existing applications if data file exists.
+   3. **Double-click the jar file**  
+      **Expected:** JobPilot launches. The CLI prompt appears showing the JobPilot logo.
 
 
 ### Edit Feature Testing
@@ -591,8 +585,8 @@ tracker to allow users to get a bird's eye view of all their applications and ma
 | Partial match | `filter status/PEND` | Matches "PENDING" successfully |
 | No match | `filter status/REJECTED` | Prints "No applications found for status: REJECTED" |
 | Empty list | `filter status/OFFER` | Prints "There is no application yet." |
-### Delete Feature Testing
 
+### Delete Feature Testing
 
 #### Test case: `delete 1`
 
@@ -641,7 +635,3 @@ tracker to allow users to get a bird's eye view of all their applications and ma
 - `Storage.saveToFile()` is called.
 - `JobPilotData.txt` updated with the latest application list.
 - On next launch, the list reflects all modifications.
-  
-  
-
-
