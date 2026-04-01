@@ -217,10 +217,6 @@ public class CommandRunner {
                 break;
 
             case UNKNOWN:
-                Ui.showError("Unknown command. Type 'help' to see available commands.");
-                break;
-
-            case ERROR:
                 Ui.showError(cmd.errorMessage);
                 break;
 
