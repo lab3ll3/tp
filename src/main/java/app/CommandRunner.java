@@ -86,7 +86,7 @@ public class CommandRunner {
 
             case SORT:
                 if (applications.isEmpty()) {
-                    Ui.showError("No applications to sort!");
+                    Ui.showError("There is no application yet.");
                     break;
                 }
 
