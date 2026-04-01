@@ -63,10 +63,6 @@ Here are your applications:
 Updated application:
 Apple | SE manager | 2025-03-10 | OFFER (Note: Negotiate salary) | Tags: [TECH]
 Updated application:
-Apple | SE manager | 2025-03-10 | OFFER (Note: Negotiate salary) | Tags: [TECH]
-Updated application:
-Apple | SE manager | 2027-01-09 | OFFER (Note: Negotiate salary) | Tags: [TECH]
-Updated application:
 Apple | SE manager | 2027-01-09 | OFFER (Note: Negotiate salary) | Tags: [TECH]
 Here are your applications:
 1. Apple | SE manager | 2027-01-09 | OFFER (Note: Negotiate salary) | Tags: [TECH]
