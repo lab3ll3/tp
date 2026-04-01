@@ -1,10 +1,12 @@
 package app;
 
 import exception.JobPilotException;
-import parser.Parser;
+import parser.ParsedCommand;
+import parser.CommandType;
 import task.Application;
 import task.Editor;
 import task.Filterer;
+import task.IndustryTag;
 import ui.Ui;
 
 import java.time.format.DateTimeParseException;
@@ -22,8 +24,13 @@ public class CommandRunner {
         this.applications = applications;
     }
 
-    public boolean run(Parser.Command cmd) {
-        switch (cmd.type) {
+    public boolean run(ParsedCommand cmd) {
+        if (cmd == null) {
+            Ui.showError("Invalid command!");
+            return true;
+        }
+
+        switch (cmd.getType()) {
 
             case BYE:
                 Ui.showGoodbye(applications.size());
@@ -36,7 +43,7 @@ public class CommandRunner {
 
             case ADD:
                 try {
-                    Application newApp = new Application(cmd.company, cmd.position, cmd.date);
+                    Application newApp = new Application(cmd.getCompany(), cmd.getPosition(), cmd.getDate());
                     applications.add(newApp);
                     Ui.showApplicationAdded(newApp);
                 } catch (DateTimeParseException e) {
@@ -50,7 +57,7 @@ public class CommandRunner {
 
             case DELETE:
                 try {
-                    Application removed = Editor.deleteApplication(applications, cmd.index);
+                    Application removed = Editor.deleteApplication(applications, cmd.getIndex());
                     Ui.showApplicationDeleted(removed, applications.size());
                 } catch (JobPilotException e) {
                     Ui.showError(e.getMessage());
@@ -59,9 +66,10 @@ public class CommandRunner {
 
             case EDIT:
                 try {
-                    Editor.editApplication(applications, cmd.index, cmd.newCompany,
-                            cmd.newPosition, cmd.newDate, cmd.newStatus);
-                    Ui.showApplicationEdited(applications.get(cmd.index - 1));
+                    Editor.editApplication(applications, cmd.getIndex(),
+                            cmd.getNewCompany(), cmd.getNewPosition(),
+                            cmd.getNewDate(), cmd.getNewStatus());
+                    Ui.showApplicationEdited(applications.get(cmd.getIndex() - 1));
                 } catch (JobPilotException e) {
                     Ui.showError(e.getMessage());
                 }
@@ -69,7 +77,7 @@ public class CommandRunner {
 
             case FILTER:
                 try {
-                    Filterer.filterByStatus(applications, cmd.searchTerm, Ui.getInstance());
+                    Filterer.filterByStatus(applications, cmd.getSearchTerm(), Ui.getInstance());
                 } catch (JobPilotException e) {
                     Ui.showError(e.getMessage());
                 }
@@ -81,7 +89,7 @@ public class CommandRunner {
                     break;
                 }
 
-                String sortType = cmd.searchTerm != null ? cmd.searchTerm.trim().toLowerCase() : "";
+                String sortType = cmd.getSearchTerm() != null ? cmd.getSearchTerm().trim().toLowerCase() : "";
                 boolean reverse = sortType.contains("reverse");
 
                 if (sortType.isEmpty() || sortType.startsWith("date")) {
@@ -117,7 +125,7 @@ public class CommandRunner {
                     break;
                 }
 
-                String rawSearchTerm = cmd.searchTerm.trim();
+                String rawSearchTerm = cmd.getSearchTerm() != null ? cmd.getSearchTerm().trim() : "";
                 if (rawSearchTerm.isEmpty()) {
                     Ui.showError("Please enter a valid search term.");
                     break;
@@ -175,19 +183,49 @@ public class CommandRunner {
 
             case STATUS:
                 try {
-                    Editor.updateStatus(applications, cmd.index, cmd.status, cmd.note);
-                    Ui.showStatusUpdated(applications.get(cmd.index - 1));
+                    Editor.updateStatus(applications, cmd.getIndex(), cmd.getStatus(), cmd.getNote());
+                    Ui.showStatusUpdated(applications.get(cmd.getIndex() - 1));
                 } catch (JobPilotException e) {
                     Ui.showError(e.getMessage());
                 }
                 break;
 
             case TAG:
-                // Handled in Parser + Editor, no logic here
+                try {
+                    String action = cmd.getAction();
+                    String tagName = cmd.getTag();
+                    int index = cmd.getIndex();
+
+                    if (index < 1 || index > applications.size()) {
+                        Ui.showError("Invalid application number! You have " + applications.size() + " application(s).");
+                        break;
+                    }
+
+                    Application app = applications.get(index - 1);
+                    IndustryTag industryTag = new IndustryTag(tagName);
+
+                    if ("add".equals(action)) {
+                        app.addIndustryTag(industryTag);
+                        Ui.showTagAdded(industryTag, app);  // ← 参数顺序正确
+                    } else if ("remove".equals(action)) {
+                        app.removeIndustryTag(industryTag);
+                        Ui.showTagRemoved(industryTag, app);  // ← 参数顺序正确
+                    } else {
+                        Ui.showError("Invalid tag action! Use: add/TAG or remove/TAG");
+                    }
+                } catch (AssertionError e) {
+                    Ui.showError(e.getMessage());
+                } catch (Exception e) {
+                    Ui.showError("Invalid tag command! Use: tag INDEX add/TAG or tag INDEX remove/TAG");
+                }
+                break;
+
+            case UNKNOWN:
+                Ui.showError("Unknown command. Type 'help' to see available commands.");
                 break;
 
             case ERROR:
-                Ui.showError(cmd.errorMessage);
+                Ui.showError(cmd.getErrorMessage());
                 break;
 
             default:

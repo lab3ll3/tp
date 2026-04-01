@@ -20,13 +20,11 @@ public class Filterer {
      *
      * @param applications The master list of applications.
      * @param statusQuery  The status to search for (e.g., "OFFER").
-     * @param ui           The UI instance to handle output.
      * @throws JobPilotException if input is invalid
      */
-    public static void filterByStatus(ArrayList<Application> applications, String statusQuery, Ui ui) throws JobPilotException {
+    public static void filterByStatus(ArrayList<Application> applications, String statusQuery) throws JobPilotException {
         // V2.0 REQUIREMENT: Assertions
         assert applications != null : "The applications list should not be null";
-        assert ui != null : "The UI component should be initialized";
 
         if (statusQuery == null || statusQuery.isBlank()) {
             throw new JobPilotException("Status filter cannot be empty. Use: filter status/OFFER");
@@ -55,22 +53,22 @@ public class Filterer {
             LOGGER.log(Level.WARNING, "No matches found for status: " + normalizedQuery);
         }
 
-        showFilterResults(filteredResults, normalizedQuery, ui);
+        showFilterResults(filteredResults, normalizedQuery);
     }
 
     /**
      * Displays formatted filter results with a summary header.
      */
-    private static void showFilterResults(ArrayList<Application> results, String query, Ui ui) {
-        ui.showLineSeparator();
+    private static void showFilterResults(ArrayList<Application> results, String query) {
+        Ui.showLineSeparator();
         System.out.println("Filtered by status: " + query);
         System.out.println("Matching applications: " + results.size());
-        ui.showLineSeparator();
+        Ui.showLineSeparator();
 
         if (results.isEmpty()) {
             System.out.println("No applications matched the given status.");
         } else {
-            ui.showApplicationList(results);
+            Ui.showApplicationList(results);
         }
     }
 }
