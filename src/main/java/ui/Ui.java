@@ -206,4 +206,8 @@ public class Ui {
     public static void close() {
         scanner.close();
     }
+
+    public static void showLineSeparator() {
+        System.out.println("────────────────────────────────────────");
+    }
 }
