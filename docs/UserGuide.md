@@ -97,6 +97,53 @@ You have 4 application(s) left.
 ___________________________________________________________________
 ```
 
+### Updating application status: 'status'
+Updates the recruitment progress of a specific job application and allows for independent note-taking. This allows you to track interview feedback or offer details separately from the company info.
+
+Format: status INDEX [set/STATUS] [note/NOTE]
+
+Updates the application at the specified INDEX.
+
+set/STATUS: The current stage (e.g., Invited, Rejected, Offer).
+
+note/NOTE: (Optional) Additional context, comments, or interview feedback.
+
+Flexibility: You can update both fields at once, or just one. If a field is omitted, the existing value is preserved. The order of set/ and note/ does not matter.
+
+Examples:
+
+status 1 set/Interview note/Scheduled for next Tuesday
+
+status 2 set/Rejected (Previous note remains unchanged)
+
+status 3 note/Salary negotiation in progress (Status remains unchanged)
+
+Example Output:
+
+Plaintext
+Status updated:
+Google | SE manager | 2025-03-10 | INTERVIEW (Note: Scheduled for next Tuesday) | Tags: [TECH]
+
+### Filtering applications by status: 'filter'
+Retrieves all applications that match a specific status. This is useful for focusing only on active leads.
+
+Format: filter status/STATUS
+
+The search is case-insensitive and supports partial matching (e.g., filter status/off will find applications with the status "OFFER").
+
+Examples:
+
+filter status/OFFER
+
+filter status/pending
+
+Example Output:
+
+Plaintext
+Found 2 application(s) with status matching 'OFFER':
+1. Google | SE manager | 2025-03-10 | OFFER (Note: Salary negotiation)
+2. Shopee | Backend Intern | 2025-03-15 | OFFER (Note: Pending acceptance)
+
 ### Listing
 Lists all the applications
 

@@ -4,32 +4,72 @@ import exception.JobPilotException;
 import parser.CommandType;
 import parser.ParsedCommand;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 // @@author Aswin-RajeshKumar
 /**
- * Parses the filter command to extract status search queries.
- * Logic originally implemented for v2.0 milestone.
+ * Advanced parser for the 'filter' command in JobPilot.
+ * Extracts search criteria to narrow down the application list.
+ * Expected Format: filter s/STATUS
  */
 public class FilterParser {
+
+    private static final Logger LOGGER = Logger.getLogger(FilterParser.class.getName());
+
+    // Command and Prefix Constants
+    private static final String COMMAND_WORD = "filter";
+    private static final String PREFIX_STATUS = "s/"; // Updated to match team master
+
+    // Error Messages
+    private static final String ERROR_INVALID_FORMAT = "Invalid filter format! Expected: filter s/STATUS";
+    private static final String ERROR_MISSING_ARGS = "Filter command is missing arguments! Use: filter s/STATUS";
+    private static final String ERROR_EMPTY_VALUE = "The filter value cannot be empty! Please provide a status after 's/'.";
+
+    /**
+     * Parses the 'filter' command input string into a ParsedCommand object.
+     */
     public static ParsedCommand parse(String input) throws JobPilotException {
-        // Extract arguments after the word "filter"
-        String arguments = input.substring("filter".length()).trim();
+        LOGGER.log(Level.INFO, "Initiating parsing for filter command: " + input);
 
-        if (arguments.isEmpty()) {
-            throw new JobPilotException("Filter command is missing arguments! Use: filter status/STATUS");
+        String trimmedInput = input.trim();
+        validateCommandStart(trimmedInput);
+
+        String argumentBlock = extractArgumentBlock(trimmedInput);
+
+        // Check for the 's/' prefix to match the team's new standard
+        if (!argumentBlock.contains(PREFIX_STATUS)) {
+            LOGGER.log(Level.WARNING, "Filter command missing required prefix 's/': " + argumentBlock);
+            throw new JobPilotException(ERROR_INVALID_FORMAT);
         }
 
-        if (!arguments.contains("s/")) {
-            throw new JobPilotException("Invalid filter format! Expected: filter status/STATUS");
-        }
-
-        String statusQuery = arguments.replace("s/", "").trim();
+        // Extract the value after s/
+        String statusQuery = extractStatusQuery(argumentBlock);
 
         if (statusQuery.isEmpty()) {
-            throw new JobPilotException("Status value cannot be empty!");
+            throw new JobPilotException(ERROR_EMPTY_VALUE);
         }
 
-        // Uses the NEW constructor we just added above
+        LOGGER.log(Level.FINE, "Successfully parsed filter command with query: " + statusQuery);
         return new ParsedCommand(CommandType.FILTER, statusQuery);
     }
+
+    private static void validateCommandStart(String input) throws JobPilotException {
+        if (!input.toLowerCase().startsWith(COMMAND_WORD)) {
+            throw new JobPilotException("Internal Error: FilterParser called for non-filter command.");
+        }
+    }
+
+    private static String extractArgumentBlock(String input) throws JobPilotException {
+        if (input.length() <= COMMAND_WORD.length()) {
+            throw new JobPilotException(ERROR_MISSING_ARGS);
+        }
+        return input.substring(COMMAND_WORD.length()).trim();
+    }
+
+    private static String extractStatusQuery(String argumentBlock) {
+        int startIndex = argumentBlock.indexOf(PREFIX_STATUS) + PREFIX_STATUS.length();
+        String query = argumentBlock.substring(startIndex).trim();
+        return query.replaceAll("\\s+", " ");
+    }
 }
-// @@author

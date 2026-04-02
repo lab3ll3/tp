@@ -45,42 +45,42 @@ Added tag: INTERN -> Microsoft | SDE Intern | 2025-03-12 | Pending | Tags: [TECH
 ___________________________________________________________________
 Updated Status: Google | SE manager | 2025-03-10 | OFFER (Note: Negotiate salary) | Tags: [TECH]
 ___________________________________________________________________
-Updated Status: Amazon | Data Analyst | 2025-03-08 | INTERVIEW (Note: Case study prep) | Tags: [FINANCE, DATA]
+Updated Status: Amazon | Data Analyst | 2025-03-08 | Interview (Note: Case study prep) | Tags: [FINANCE, DATA]
 ___________________________________________________________________
-Updated Status: Microsoft | SDE Intern | 2025-03-12 | PENDING (Note: Waiting for reply) | Tags: [TECH, INTERN]
+Updated Status: Microsoft | SDE Intern | 2025-03-12 | Pending (Note: Waiting for reply) | Tags: [TECH, INTERN]
 ___________________________________________________________________
 Found 1 application(s) matching 'c/google':
 1. Google | SE manager | 2025-03-10 | OFFER (Note: Negotiate salary) | Tags: [TECH]
 ___________________________________________________________________
 Found 1 application(s) matching 'c/micro':
-1. Microsoft | SDE Intern | 2025-03-12 | PENDING (Note: Waiting for reply) | Tags: [TECH, INTERN]
+1. Microsoft | SDE Intern | 2025-03-12 | Pending (Note: Waiting for reply) | Tags: [TECH, INTERN]
 ___________________________________________________________________
 Found 1 application(s) matching 'p/intern':
-1. Microsoft | SDE Intern | 2025-03-12 | PENDING (Note: Waiting for reply) | Tags: [TECH, INTERN]
+1. Microsoft | SDE Intern | 2025-03-12 | Pending (Note: Waiting for reply) | Tags: [TECH, INTERN]
 ___________________________________________________________________
 Found 1 application(s) matching 's/offer':
 1. Google | SE manager | 2025-03-10 | OFFER (Note: Negotiate salary) | Tags: [TECH]
 ___________________________________________________________________
 Sorted by submission date!
 Here are your applications:
-1. Amazon | Data Analyst | 2025-03-08 | INTERVIEW (Note: Case study prep) | Tags: [FINANCE, DATA]
+1. Amazon | Data Analyst | 2025-03-08 | Interview (Note: Case study prep) | Tags: [FINANCE, DATA]
 2. Google | SE manager | 2025-03-10 | OFFER (Note: Negotiate salary) | Tags: [TECH]
-3. Microsoft | SDE Intern | 2025-03-12 | PENDING (Note: Waiting for reply) | Tags: [TECH, INTERN]
+3. Microsoft | SDE Intern | 2025-03-12 | Pending (Note: Waiting for reply) | Tags: [TECH, INTERN]
 ___________________________________________________________________
 Here are your applications:
-1. Amazon | Data Analyst | 2025-03-08 | INTERVIEW (Note: Case study prep) | Tags: [FINANCE, DATA]
+1. Amazon | Data Analyst | 2025-03-08 | Interview (Note: Case study prep) | Tags: [FINANCE, DATA]
 2. Google | SE manager | 2025-03-10 | OFFER (Note: Negotiate salary) | Tags: [TECH]
-3. Microsoft | SDE Intern | 2025-03-12 | PENDING (Note: Waiting for reply) | Tags: [TECH, INTERN]
+3. Microsoft | SDE Intern | 2025-03-12 | Pending (Note: Waiting for reply) | Tags: [TECH, INTERN]
 ___________________________________________________________________
 Removed tag: /FINANCE -> Google | SE manager | 2025-03-10 | OFFER (Note: Negotiate salary) | Tags: [TECH]
 ___________________________________________________________________
 Deleted application:
-Amazon | Data Analyst | 2025-03-08 | INTERVIEW (Note: Case study prep) | Tags: [FINANCE, DATA]
+Amazon | Data Analyst | 2025-03-08 | Interview (Note: Case study prep) | Tags: [FINANCE, DATA]
 You have 2 application(s) left.
 ___________________________________________________________________
 Here are your applications:
 1. Google | SE manager | 2025-03-10 | OFFER (Note: Negotiate salary) | Tags: [TECH]
-2. Microsoft | SDE Intern | 2025-03-12 | PENDING (Note: Waiting for reply) | Tags: [TECH, INTERN]
+2. Microsoft | SDE Intern | 2025-03-12 | Pending (Note: Waiting for reply) | Tags: [TECH, INTERN]
 ___________________________________________________________________
 Updated application:
 Apple | SE manager | 2025-03-10 | OFFER (Note: Negotiate salary) | Tags: [TECH]
@@ -90,10 +90,10 @@ Apple | SE manager | 2027-01-09 | OFFER (Note: Negotiate salary) | Tags: [TECH]
 ___________________________________________________________________
 Here are your applications:
 1. Apple | SE manager | 2027-01-09 | OFFER (Note: Negotiate salary) | Tags: [TECH]
-2. Microsoft | SDE Intern | 2025-03-12 | PENDING (Note: Waiting for reply) | Tags: [TECH, INTERN]
+2. Microsoft | SDE Intern | 2025-03-12 | Pending (Note: Waiting for reply) | Tags: [TECH, INTERN]
 ___________________________________________________________________
 Deleted application:
-Microsoft | SDE Intern | 2025-03-12 | PENDING (Note: Waiting for reply) | Tags: [TECH, INTERN]
+Microsoft | SDE Intern | 2025-03-12 | Pending (Note: Waiting for reply) | Tags: [TECH, INTERN]
 You have 1 application(s) left.
 ___________________________________________________________________
 Deleted application:
