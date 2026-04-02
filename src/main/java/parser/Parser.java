@@ -1,7 +1,13 @@
 package parser;
 
 import exception.JobPilotException;
-import parser.subparsers.*;
+import parser.subparsers.ApplicationParser;
+import parser.subparsers.DeleterParser;
+import parser.subparsers.EditorParser;
+import parser.subparsers.FilterParser;
+import parser.subparsers.SearcherParser;
+import parser.subparsers.StatusParser;
+import parser.subparsers.TaggerParser;
 
 /**
  * Main parser that routes commands to appropriate subparsers.
