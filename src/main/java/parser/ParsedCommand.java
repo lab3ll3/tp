@@ -4,7 +4,8 @@ import task.IndustryTag;
 
 /**
  * Represents a command that has been parsed from raw user input.
- * It carries the necessary data to the CommandRunner for execution.
+ * Carries necessary data to the CommandRunner for execution.
+ * Internal structure optimized for encapsulation and readability.
  */
 public class ParsedCommand {
 
@@ -20,7 +21,7 @@ public class ParsedCommand {
 
     // Search & Filter Fields
     private String searchTerm;
-    public final String searchType;
+    private final String searchType;
 
     // Status & Notes Fields
     private String statusValue;
@@ -30,80 +31,61 @@ public class ParsedCommand {
     private IndustryTag tag;
     private boolean isAddTag;
 
-    // Edit Fields (Mapped to new values)
+    // Edit Fields
     private String newCompany;
     private String newPosition;
     private String newDate;
     private String newStatus;
 
-    // ========== CONSTRUCTORS ==========
+    // ================== CONSTRUCTORS ==================
 
-    /**
-     * Constructor for simple commands (LIST, SORT, HELP, BYE).
-     */
+    /** Simple commands (LIST, SORT, HELP, BYE) */
     public ParsedCommand(CommandType type) {
         this.type = type;
         this.errorMessage = null;
         this.searchType = null;
     }
 
-    /**
-     * Constructor for ERROR, FILTER, or SEARCH commands.
-     */
-    public ParsedCommand(CommandType type, String stringValue) {
-        this.type = type;
+    /** ERROR command */
+    public ParsedCommand(String errorMessage, boolean isError) {
+        this.type = CommandType.ERROR;
+        this.errorMessage = errorMessage;
         this.searchType = null;
-        if (type == CommandType.FILTER || type == CommandType.SEARCH) {
-            this.searchTerm = stringValue;
-            this.errorMessage = null;
-        } else if (type == CommandType.ERROR) {
-            this.errorMessage = stringValue;
-            this.searchTerm = null;
-        } else {
-            this.errorMessage = null;
-            this.searchTerm = stringValue;
-        }
     }
 
-    /**
-     * Constructor for ADD command.
-     */
+    /** FILTER command */
+    public ParsedCommand(CommandType type, String searchTerm) {
+        this.type = type;
+        this.searchTerm = searchTerm;
+        this.errorMessage = null;
+        this.searchType = null;
+    }
+
+    /** ADD command */
     public ParsedCommand(String company, String position, String date) {
-        this.type = CommandType.ADD;
+        this(CommandType.ADD);
         this.company = company;
         this.position = position;
         this.date = date;
-        this.errorMessage = null;
-        this.searchType = null;
     }
 
-    /**
-     * Constructor for DELETE command.
-     */
+    /** DELETE command */
     public ParsedCommand(int index) {
-        this.type = CommandType.DELETE;
+        this(CommandType.DELETE);
         this.index = index;
-        this.errorMessage = null;
-        this.searchType = null;
     }
 
-    /**
-     * Constructor for EDIT command.
-     */
+    /** EDIT command */
     public ParsedCommand(int index, String company, String position, String date, String status) {
-        this.type = CommandType.EDIT;
+        this(CommandType.EDIT);
         this.index = index;
         this.newCompany = company;
         this.newPosition = position;
         this.newDate = date;
         this.newStatus = status;
-        this.errorMessage = null;
-        this.searchType = null;
     }
 
-    /**
-     * Constructor for SEARCH command (Merged from master).
-     */
+    /** SEARCH command */
     public ParsedCommand(String searchType, String searchTerm) {
         this.type = CommandType.SEARCH;
         this.searchType = searchType;
@@ -111,31 +93,23 @@ public class ParsedCommand {
         this.errorMessage = null;
     }
 
-    /**
-     * Constructor for STATUS command.
-     */
+    /** STATUS command */
     public ParsedCommand(int index, String status, String note) {
-        this.type = CommandType.STATUS;
+        this(CommandType.STATUS);
         this.index = index;
         this.statusValue = status;
         this.note = note;
-        this.errorMessage = null;
-        this.searchType = null;
     }
 
-    /**
-     * Constructor for TAG command.
-     */
+    /** TAG command */
     public ParsedCommand(int index, IndustryTag tag, boolean isAdd) {
-        this.type = CommandType.TAG;
+        this(CommandType.TAG);
         this.index = index;
         this.tag = tag;
         this.isAddTag = isAdd;
-        this.errorMessage = null;
-        this.searchType = null;
     }
 
-    // ========== GETTERS ==========
+    // ================== GETTERS ==================
 
     public CommandType getType() {
         return type;
