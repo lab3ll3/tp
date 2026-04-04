@@ -557,7 +557,7 @@ tracker to allow users to get a bird's eye view of all their applications and ma
 - Command-line outputs shall be **readable with standard font sizes**, use clear formatting (tables, line breaks), and avoid color dependence.
 - Messages shall be concise, avoiding technical jargon when addressing end users.
 
-### 4. OS requirement
+### 4. OS Requirement
 - Shall work on any mainstream OS as long as it has Java 17 or above installed.
 
 ## Glossary
@@ -622,7 +622,6 @@ tracker to allow users to get a bird's eye view of all their applications and ma
 
 #### Test case: `delete 0`
 
-- **Action:** Enter `delete 0`
 - **Expected:**
   - A `JobPilotException` is thrown indicating an invalid index.
   - No deletion occurs.
@@ -630,7 +629,6 @@ tracker to allow users to get a bird's eye view of all their applications and ma
 
 #### Test case: `delete` (no index)
 
-- **Action:** Enter `delete`
 - **Expected:**
   - A `JobPilotException` is thrown indicating an invalid index.
   - No deletion.
@@ -638,7 +636,6 @@ tracker to allow users to get a bird's eye view of all their applications and ma
 
 #### Test case: `delete x` (non-numeric index)
 
-- **Action:** Enter `delete abc`
 - **Expected:**
   - A `JobPilotException` is thrown due to non-numeric input.
   - No deletion.
@@ -646,7 +643,6 @@ tracker to allow users to get a bird's eye view of all their applications and ma
 
 #### Test case: `delete N+1` (index out of range)
 
-- **Action:** Enter index greater than list size
 - **Expected:**
   - A `JobPilotException` is thrown indicating the index is out of bounds.
   - No deletion occurs.
