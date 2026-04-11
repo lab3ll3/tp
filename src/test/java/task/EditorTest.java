@@ -78,6 +78,74 @@ class EditorTest {
     }
 
     @Test
+    void editApplication_malformedInputWithGarbageBeforeField_rejectsCommand() {
+        JobPilotException exception = assertThrows(JobPilotException.class, () -> {
+            Editor.editApplication("edit 1 nonsense c/Meta", applications);
+        });
+        String message = exception.getMessage();
+        assertTrue(message.contains("Invalid edit format") || message.contains("Unrecognized text"),
+                "Expected rejection of malformed input. Got: " + message);
+        assertEquals("Google", testApp.getCompany());
+    }
+
+    @Test
+    void editApplication_malformedInputWithGarbageBetweenFields_rejectsCommand() {
+        JobPilotException exception = assertThrows(JobPilotException.class, () -> {
+            Editor.editApplication("edit 1 c/Google xyz p/SWE", applications);
+        });
+        String message = exception.getMessage();
+        assertTrue(message.contains("Invalid edit format") || message.contains("Unrecognized text"),
+                "Expected rejection of malformed input. Got: " + message);
+        assertEquals("Google", testApp.getCompany());
+        assertEquals("Software Engineer", testApp.getPosition());
+    }
+
+    @Test
+    void editApplication_malformedInputWithGarbageAfterFields_rejectsCommand() {
+        JobPilotException exception = assertThrows(JobPilotException.class, () -> {
+            Editor.editApplication("edit 1 c/Google p/SWE garbage", applications);
+        });
+        String message = exception.getMessage();
+        assertTrue(message.contains("Invalid edit format") || message.contains("Unrecognized text"),
+                "Expected rejection of malformed input. Got: " + message);
+        assertEquals("Google", testApp.getCompany());
+        assertEquals("Software Engineer", testApp.getPosition());
+    }
+
+    @Test
+    void editApplication_malformedInputWithRandomWordAfterIndex_rejectsCommand() {
+        JobPilotException exception = assertThrows(JobPilotException.class, () -> {
+            Editor.editApplication("edit 1 abc123 c/Google", applications);
+        });
+        String message = exception.getMessage();
+        assertTrue(message.contains("Invalid edit format") || message.contains("Unrecognized text"),
+                "Expected rejection of malformed input. Got: " + message);
+        assertEquals("Google", testApp.getCompany());
+    }
+
+    @Test
+    void editApplication_malformedInputWithWrongPrefix_rejectsCommand() {
+        JobPilotException exception = assertThrows(JobPilotException.class, () -> {
+            Editor.editApplication("edit 1 x/Google", applications);
+        });
+        String message = exception.getMessage();
+        assertTrue(message.contains("Invalid edit format") || message.contains("Unrecognized text"),
+                "Expected rejection of malformed input. Got: " + message);
+        assertEquals("Google", testApp.getCompany());
+    }
+
+    @Test
+    void editApplication_malformedInputWithSpecialChars_rejectsCommand() {
+        JobPilotException exception = assertThrows(JobPilotException.class, () -> {
+            Editor.editApplication("edit 1 c/Google @#$% p/SWE", applications);
+        });
+        String message = exception.getMessage();
+        assertTrue(message.contains("Invalid edit format") || message.contains("Unrecognized text"),
+                "Expected rejection of malformed input. Got: " + message);
+        assertEquals("Google", testApp.getCompany());
+    }
+
+    @Test
     void editApplication_missingIndex_throwsException() {
         JobPilotException exception = assertThrows(JobPilotException.class, () -> {
             Editor.editApplication("edit", applications);
