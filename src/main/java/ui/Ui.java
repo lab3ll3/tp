@@ -2,6 +2,7 @@ package ui;
 
 import task.Application;
 import task.IndustryTag;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -28,12 +29,12 @@ public class Ui {
      */
     public static void showWelcome() {
         String logo = """
-                 _   ___   ____   ____   ___  _       ___   _____
-                | | / _ \\ | __ ) |  _ \\ |_ _|| |     / _ \\ |_   _|
-             _  | || | | ||  _ \\ | |_) | | | | |    | | | |  | |
-            | |_| || |_| || |_) ||  __/  | | | |___ | |_| |  | |
-             \\___/  \\___/ |____/ |_|    |___||_____| \\___/   |_|
-            """;
+                     _   ___   ____   ____   ___  _       ___   _____
+                    | | / _ \\ | __ ) |  _ \\ |_ _|| |     / _ \\ |_   _|
+                 _  | || | | ||  _ \\ | |_) | | | | |    | | | |  | |
+                | |_| || |_| || |_) ||  __/  | | | |___ | |_| |  | |
+                 \\___/  \\___/ |____/ |_|    |___||_____| \\___/   |_|
+                """;
         System.out.println("Hello from\n" + logo);
         System.out.println("Welcome to JobPilot!");
         System.out.println("Type 'help' to see all available commands!");
@@ -124,7 +125,7 @@ public class Ui {
      */
     public static void showSearchResults(ArrayList<Application> results, String searchTerm) {
         if (results.isEmpty()) {
-            System.out.println("No applications found for company: " + searchTerm);
+            System.out.println("No applications found matching '" + searchTerm + "'.");
         } else {
             System.out.println("Found " + results.size() + " application(s) matching '" + searchTerm + "':");
             for (int i = 0; i < results.size(); i++) {
@@ -208,7 +209,9 @@ public class Ui {
                 tag INDEX remove/TAG                                        Remove a tag from an application
                 list                                                        List all job applications
                 sort                                                        Sort applications by date
-                search [c/COMPANY] [p/POSITION] [s/STATUS]                  Search applications
+                search c/COMPANY                                            Search applications by company
+                search p/POSITION                                           Search applications by position
+                search s/STATUS                                             Search applications by status
                 help                                                        Show this message
                 bye                                                         Exit the application""";
 

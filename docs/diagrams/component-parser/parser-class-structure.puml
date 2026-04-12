@@ -1,0 +1,17 @@
+@startuml
+!theme plain
+title EditorParser - Class Structure
+
+class EditorParser {
+    + parse(String input) : ParsedCommand
+    - findNextPrefix(String str, int start) : int
+}
+
+note top of EditorParser
+  Format: edit INDEX
+  [c/COMPANY] [p/POSITION]
+  [d/DATE] [s/STATUS]
+
+  Example: edit 1 c/Google p/SWE d/2024-09-12
+end note
+@enduml

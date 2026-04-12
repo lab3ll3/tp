@@ -10,8 +10,8 @@ By using JobPilot, users can track application progress and important details wi
 1. **Install Java 17+:** Verify that your computer has Java `17` or a newer version installed. <br>
    *Mac users:* Please follow the specific JDK installation guide [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 2. **Download the App:** Grab the latest `.jar` release file from [here](https://github.com/AY2526S2-CS2113-W13-3/tp/releases).
-3. **Set Up Your Directory:** Move the downloaded file into a dedicated new folder. (Note: Running the app for the first time will automatically generate a `data/JobPilotData.txt` file in this directory to save your tasks).
-4. **Launch JobPilot** Open your terminal and run the app with the following command: `java -jar <release-name>.jar`
+3. **Set Up Your Directory:** Move the downloaded file into a dedicated new folder. (Note: Running the app for the first time will automatically generate a `data/JobPilotData.json` file in this directory to save your applications).
+4. **Launch JobPilot:** Open your terminal, navigate to the folder, and run the following command: `java -jar JobPilot.jar`
 
 ## Features
 
@@ -22,21 +22,17 @@ Format: `help`
 
 Example output:
 
+Note: only a portion of the message is shown for brevity.
+
 ```text
 Available Commands:
-add c/COMPANY p/POSITION d/DATE                             Add a new job application
-edit INDEX [c/COMPANY] [p/POSITION] [d/DATE] [s/STATUS]     Edit existing application
-delete INDEX                                                Delete an application
-status INDEX [s/STATUS] [note/NOTE]                         Update application status and add a note
-filter s/STATUS                                             Filter applications by status
-tag INDEX add/TAG                                           Add a tag to an application
-tag INDEX remove/TAG                                        Remove a tag from an application
-list                                                        List all job applications
-sort                                                        Sort applications by date
-search [c/COMPANY] [p/POSITION] [s/STATUS]                  Search applications
-help                                                        Show this message
-bye                                                         Exit the application
-___________________________________________________________________
+add c/COMPANY p/POSITION d/DATE         Add a new job application
+edit INDEX [...]                        Edit existing application
+delete INDEX                            Delete an application
+...
+help                                    Show this message
+bye                                     Exit the application
+____________________________________________________
 ```
 
 _Note:_ In the `help` output above, `search [c/COMPANY] [p/POSITION] [s/STATUS]` means you use **any one** of these forms per command (company **or** position **or** status), not several prefixes in the same line.
@@ -108,7 +104,7 @@ s/STATUS: The current stage (e.g., Invited, Rejected, Offer).
 
 note/NOTE: (Optional) Additional context, comments, or interview feedback.
 
-Flexibility: You can update both fields at once, or just one. If a field is omitted, the existing value is preserved. The order of set/ and note/ does not matter.
+Flexibility: You can update both fields at once, or just one. If a field is omitted, the existing value is preserved. The order of s/ and note/ does not matter.
 
 Examples:
 
@@ -140,7 +136,7 @@ filter s/pending
 Example Output:
 
 Plaintext
-Found 2 application(s) with status matching 'OFFER':
+Found 2 application(s) with status 'OFFER':
 1. Google | SE manager | 2025-03-10 | OFFER (Note: Salary negotiation)
 2. Shopee | Backend Intern | 2025-03-15 | OFFER (Note: Pending acceptance)
 
@@ -192,6 +188,8 @@ ___________________________________________________________________
 - Searches job applications by matching the company name
   or the position or the current status
 - Uses a **case-insensitive partial search**.
+- Search function only supports searching
+  by one dimension
 
 **Single field per command:** each `search` uses **exactly one** prefix (`c/`, `p/`, or `s/`) and one keyword. Combining multiple criteria in one command (for example `search c/google p/engineer`) is **not supported** in the current version—run separate searches if you need more than one filter.
 
@@ -302,18 +300,17 @@ ___________________________________________________________________
        to the other unless you manually transfer the updated data file.
 
 ## Command Summary
-
-| Action | Format, Examples                                                                                                      |
-|--------|-----------------------------------------------------------------------------------------------------------------------|
-| Add | `add c/COMPANY p/POSITION d/DATE` <br> e.g., `add c/Google p/Software Engineer d/2026-03-29`                          |
-| Edit | `edit INDEX [c/COMPANY] [p/POSITION] [d/DATE] [s/STATUS]` <br> e.g., `edit 2 c/Google p/Backend Engineer s/Interview` |
-| Delete | `delete INDEX` <br> e.g., `delete 1`                                                                                  |
-| Status | `status INDEX [s/STATUS] [note/NOTE]` <br> e.g., `status 1 set/Interview note/Phone screening completed`              |
-| Filter | `filter s/STATUS` <br> e.g., `filter s/Applied`                                                                       |
-| Tag Add | `tag INDEX add/TAG` <br> e.g., `tag 1 add/Tech`                                                                       |
+| Action     | Format, Examples                                                                                                      |
+|------------|-----------------------------------------------------------------------------------------------------------------------|
+| Add        | `add c/COMPANY p/POSITION d/DATE` <br> e.g., `add c/Google p/Software Engineer d/2026-03-29`                          |
+| Edit       | `edit INDEX [c/COMPANY] [p/POSITION] [d/DATE] [s/STATUS]` <br> e.g., `edit 2 c/Google p/Backend Engineer s/Interview` |
+| Delete     | `delete INDEX` <br> e.g., `delete 1`                                                                                  |
+| Status     | `status INDEX [s/STATUS] [note/NOTE]` <br> e.g., `status 1 s/Interview note/Phone screening completed`                |
+| Filter     | `filter s/STATUS` <br> e.g., `filter s/Applied`                                                                       |
+| Tag Add    | `tag INDEX add/TAG` <br> e.g., `tag 1 add/Tech`                                                                       |
 | Tag Remove | `tag INDEX remove/TAG` <br> e.g., `tag 1 remove/Tech`                                                                 |
-| List | `list`                                                                                                                |
-| Sort | `sort`                                                                                                                |
-| Search | One of: `search c/KEYWORD`, `search p/KEYWORD`, `search s/KEYWORD` <br> e.g., `search c/Google` (one prefix per command) |
-| Help | `help`                                                                                                                |
-| Exit | `bye`                                                                                                                 |
+| List       | `list`                                                                                                                |
+| Sort       | `sort`                                                                                                                |
+| Search     | `search c/COMPANY` <br> `search p/POSITION` <br> `search s/STATUS` <br> e.g., `search c/Google`                       |
+| Help       | `help`                                                                                                                |
+| Exit       | `bye`                                                                                                                 |

@@ -31,6 +31,25 @@ public class EditorParser {
 
         String remaining = normalized.substring(fieldsStart);
 
+        int firstC = remaining.indexOf("c/");
+        int firstP = remaining.indexOf("p/");
+        int firstD = remaining.indexOf("d/");
+        int firstS = remaining.indexOf("s/");
+
+        int firstValidPrefix = remaining.length();
+        if (firstC != -1 && firstC < firstValidPrefix) firstValidPrefix = firstC;
+        if (firstP != -1 && firstP < firstValidPrefix) firstValidPrefix = firstP;
+        if (firstD != -1 && firstD < firstValidPrefix) firstValidPrefix = firstD;
+        if (firstS != -1 && firstS < firstValidPrefix) firstValidPrefix = firstS;
+
+        if (firstValidPrefix > 0) {
+            String garbage = remaining.substring(0, firstValidPrefix).trim();
+            if (!garbage.isEmpty()) {
+                throw new JobPilotException("Invalid edit format! Unrecognized text before fields: '" + garbage +
+                        "'. Use: edit INDEX [c/COMPANY] [p/POSITION] [d/DATE] [s/STATUS]");
+            }
+        }
+
         String company = null;
         String position = null;
         String date = null;
@@ -71,12 +90,17 @@ public class EditorParser {
             }
         }
 
+        if (date != null) {
+            try {
+                java.time.LocalDate.parse(date);
+            } catch (java.time.format.DateTimeParseException e) {
+                throw new JobPilotException("Invalid date! Use YYYY-MM-DD format (e.g., 2024-09-12)");
+            }
+        }
+
         return new ParsedCommand(index, company, position, date, status);
     }
 
-    /**
-     * Finds the next prefix (c/, p/, d/, s/) starting from the given position.
-     */
     private static int findNextPrefix(String str, int start) {
         int cIndex = str.indexOf("c/", start);
         int pIndex = str.indexOf("p/", start);

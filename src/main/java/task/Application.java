@@ -1,5 +1,7 @@
 package task;
 
+import exception.JobPilotException;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -28,6 +30,7 @@ public class Application implements Comparable<Application> {
         assert !company.trim().isEmpty(): "Company cannot be empty string!";
         assert !position.trim().isEmpty(): "Position cannot be empty string!";
         assert !date.trim().isEmpty(): "Date cannot be empty string!";
+
 
         this.company = company;
         this.position = position;
@@ -107,7 +110,7 @@ public class Application implements Comparable<Application> {
      *
      * @param date The new date in YYYY-MM-DD format
      */
-    public void setDate(String date) {
+    public void setDate(String date) throws JobPilotException {
         assert date != null && !date.trim().isEmpty()
                 : "Date cannot be null or empty";
         this.date = LocalDate.parse(date);
@@ -139,5 +142,22 @@ public class Application implements Comparable<Application> {
 
     public Set<IndustryTag> getIndustryTags() {
         return Collections.unmodifiableSet(industryTags);
+    }
+
+    /**
+     * Checks if this application is a duplicate of another application.
+     * Two applications are considered duplicates if they have the same company,
+     * position, and date.
+     *
+     * @param other The other application to compare with
+     * @return true if duplicate, false otherwise
+     */
+    public boolean isDuplicate(Application other) {
+        if (other == null) {
+            return false;
+        }
+        return this.company.equalsIgnoreCase(other.company) &&
+                this.position.equalsIgnoreCase(other.position) &&
+                this.date.equals(other.date);
     }
 }

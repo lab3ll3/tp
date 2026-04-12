@@ -28,13 +28,25 @@ The `UI` component,
 
 The **Parser** component is responsible for interpreting raw user input and converting it into structured `ParsedCommand` objects.
 
-![Parser Architecture](diagrams/component-parser/parser-architecture.png)
-*Figure 1: Parser Component Architecture*
+![Class Structure](diagrams/component-parser/parser-class-structure.png)
+*Figure 1: Class Structure*
 
-The following diagram illustrates how the parser processes a typical `edit` command:
+The EditorParser handles the parsing of edit commands. 
 
-![Parser Flow](diagrams/component-parser/parser-flow.png)
-*Figure 2: Parser Flow for Edit Command*
+![Seqeuence Diagram](diagrams/component-parser/parser-sequence diagram.png)
+*Figure 2: Sequence Diagram*
+
+The sequence diagram shows the interaction flow for parsing an edit command.
+
+![ParsedCommand](diagrams/component-parser/parser-parsed-command.png)
+*Figure 3: ParsedCommand*
+
+When parsing is successful, the EditorParser returns a ParsedCommand object.
+
+![Parser Routing](diagrams/component-parser/parser-routing.png)
+*Figure 4: Integration with Main Parser*
+
+The main Parser routes the edit command to EditorParser based on the command keyword.
 
 ### Storage Component
 
@@ -103,12 +115,12 @@ The following diagram illustrates how the `CommandRunner` processes different co
 
 ## Implementation
 
-### Edit Application Feature
+### Editor Application Feature
 
 #### Sequence Diagram
 
-![Edit Sequence](diagrams/editor/sequence.png)
-*Figure 3: Edit Feature Sequence Diagram*
+![Editor Sequence Diagram](diagrams/editor/sequence.png)
+*Figure 3: Editor Feature Sequence Diagram*
 
 **Error Handling**
 
@@ -502,13 +514,13 @@ The following sequence diagram illustrates the flow of updating status and notes
 
 #### Error Handling
 
-| Error Scenario | Condition                              | User Response |
-|----------------|----------------------------------------|---------------|
+| Error Scenario | Condition                                | User Response |
+|----------------|------------------------------------------|---------------|
 | Missing index | User enters `status s/OFFER` without index | "Please provide an index. Example: status 1 set/OFFER" |
-| Invalid index | Index out of range                     | "Invalid application number! You have X application(s)." |
-| Invalid format | Missing `s/` or incorrectly formatted  | "Invalid status format! Use: status INDEX set/STATUS note/NOTE" |
-| Empty status | User enters `status 1 s/`              | "Status cannot be empty!" |
-| Both fields missing | User enters `status 1`                 | "No valid fields to update! Use: set/STATUS and/or note/NOTE" |
+| Invalid index | Index out of range                       | "Invalid application number! You have X application(s)." |
+| Invalid format | Missing `s/` or incorrectly formatted    | "Invalid status format! Use: status INDEX set/STATUS note/NOTE" |
+| Empty status | User enters `status 1 s/`                | "Status cannot be empty!" |
+| Both fields missing | User enters `status 1`                   | "No valid fields to update! Use: set/STATUS and/or note/NOTE" |
 
 #### Design Rationale
 
@@ -570,24 +582,24 @@ tracker to allow users to get a bird's eye view of all their applications and ma
 ## Instructions for manual testing
 
 ## Initial Launch
-1. Use the `JobPilot.jar`.
-2. Place the jar in an empty folder.
-   3. **Double-click the jar file**  
+1. Download the `JobPilot.jar` file.
+2. Place the jar in an empty folder. 
+3. Open a terminal in that folder and run the app with the following command: `java -jar JobPilot.jar`
       **Expected:** JobPilot launches. The CLI prompt appears showing the JobPilot logo.
 
 
 ### Edit Feature Testing
 
-| Test          | Command | Expected |
-|---------------|---------|----------|
-| Edit company  | `edit 1 c/Microsoft` | Company updated |
-| Edit position | `edit 1 p/Senior Engineer` | Position updated |
-| Edit date     | `edit 1 d/2024-12-01` | Date updated |
-| Edit status   | `edit 1 s/Interview` | Status updated to Interview |
-| Edit multiple | `edit 1 c/Google p/SWE d/2024-09-12` | All fields updated |
-| Invalid index | `edit 99 c/Google` | Error: invalid index |
-| No fields     | `edit 1` | Error: no fields to update |
-| Invalid date  | `edit 1 d/2024-13-01` | Error: invalid date format |
+| Test          | Command                              | Expected                    |
+|---------------|--------------------------------------|-----------------------------|
+| Edit company  | `edit 1 c/Microsoft`                 | Company updated             |
+| Edit position | `edit 1 p/Senior Engineer`           | Position updated            |
+| Edit date     | `edit 1 d/2024-12-01`                | Date updated                |
+| Edit status   | `edit 1 s/Interview`                 | Status updated to Interview |
+| Edit multiple | `edit 1 c/Google p/SWE d/2024-09-12` | All fields updated          |
+| Invalid index | `edit 99 c/Google`                   | Error: invalid index        |
+| No fields     | `edit 1`                             | Error: no fields to update  |
+| Invalid date  | `edit 1 d/2024-13-01`                | Error: invalid date format  |
 
 ### Search by Company Feature Testing
 

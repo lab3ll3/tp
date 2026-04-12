@@ -1,0 +1,24 @@
+@startuml
+!theme plain
+title Parser Routing - Edit Command
+
+class Parser {
+    + parse(String input) : ParsedCommand
+}
+
+class EditorParser {
+    + parse(String input) : ParsedCommand
+}
+
+Parser --> EditorParser : delegates "edit"
+
+note left of Parser
+  switch (command) {
+    case "edit":
+      return EditorParser.parse(input);
+    case "add":
+      return ApplicationParser.parse(input);
+    ...
+  }
+end note
+@enduml

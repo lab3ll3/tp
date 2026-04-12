@@ -1,0 +1,30 @@
+@startuml
+!theme plain
+title EditorParser - Sequence Diagram
+
+actor User
+participant "Parser" as Parser
+participant "EditorParser" as EditorParser
+participant "ParsedCommand" as ParsedCommand
+
+User -> Parser : edit 1 c/Google p/SWE d/2024-09-12
+activate Parser
+
+Parser -> EditorParser : parse(input)
+activate EditorParser
+
+EditorParser -> EditorParser : normalize & split
+EditorParser -> EditorParser : extract index (1 → 0)
+EditorParser -> EditorParser : parse fields (c/, p/, d/)
+
+EditorParser -> ParsedCommand : new ParsedCommand(index, company, position, date, status)
+activate ParsedCommand
+ParsedCommand --> EditorParser : ParsedCommand object
+deactivate ParsedCommand
+
+EditorParser --> Parser : return ParsedCommand
+deactivate EditorParser
+
+Parser --> User : ParsedCommand to CommandRunner
+deactivate Parser
+@enduml

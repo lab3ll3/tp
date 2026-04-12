@@ -3,6 +3,7 @@ package task;
 import exception.JobPilotException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import parser.subparsers.EditorParser;
 
 import java.util.ArrayList;
 
@@ -24,7 +25,6 @@ class EditorTest {
         applications.add(testApp);
     }
 
-    // ================= SUCCESS CASES =================
 
     @Test
     void editApplication_updateCompanyOnly_success() throws JobPilotException {
@@ -78,7 +78,60 @@ class EditorTest {
         assertEquals("Senior Software Engineer", testApp.getPosition());
     }
 
-    // ================= ERROR CASES =================
+    @Test
+    void parse_malformedInputWithGarbageBeforeFields_rejectsCommand() {
+        JobPilotException exception = assertThrows(JobPilotException.class, () -> {
+            EditorParser.parse("edit 1 nonsense c/Meta");
+        });
+
+        String message = exception.getMessage();
+        assertTrue(message.contains("Unrecognized text before fields") || message.contains("nonsense"),
+                "Expected rejection of garbage before fields. Got: " + message);
+    }
+
+    @Test
+    void parse_malformedInputWithRandomWordBeforeFields_rejectsCommand() {
+        JobPilotException exception = assertThrows(JobPilotException.class, () -> {
+            EditorParser.parse("edit 1 abc123 c/Google");
+        });
+
+        String message = exception.getMessage();
+        assertTrue(message.contains("Unrecognized text before fields") || message.contains("abc123"),
+                "Expected rejection of garbage before fields. Got: " + message);
+    }
+
+    @Test
+    void parse_malformedInputWithMultipleWordsBeforeFields_rejectsCommand() {
+        JobPilotException exception = assertThrows(JobPilotException.class, () -> {
+            EditorParser.parse("edit 1 hello world c/Google");
+        });
+
+        String message = exception.getMessage();
+        assertTrue(message.contains("Unrecognized text before fields") || message.contains("hello"),
+                "Expected rejection of garbage before fields. Got: " + message);
+    }
+
+    @Test
+    void parse_malformedInputWithSpecialCharsBeforeFields_rejectsCommand() {
+        JobPilotException exception = assertThrows(JobPilotException.class, () -> {
+            EditorParser.parse("edit 1 @#$% c/Google");
+        });
+
+        String message = exception.getMessage();
+        assertTrue(message.contains("Unrecognized text before fields") || message.contains("@#$%"),
+                "Expected rejection of garbage before fields. Got: " + message);
+    }
+
+    @Test
+    void parse_malformedInputWithWrongPrefix_rejectsCommand() {
+        JobPilotException exception = assertThrows(JobPilotException.class, () -> {
+            EditorParser.parse("edit 1 x/Google");
+        });
+
+        String message = exception.getMessage();
+        assertTrue(message.contains("Unrecognized text before fields") || message.contains("x/"),
+                "Expected rejection of invalid prefix before valid field. Got: " + message);
+    }
 
     @Test
     void editApplication_missingIndex_throwsException() {
@@ -140,8 +193,6 @@ class EditorTest {
             assertTrue(exception.getMessage().contains("cannot be empty"));
         }
     }
-
-    // ================= EDGE CASES =================
 
     @Test
     void editApplication_emptyList_throwsException() {
