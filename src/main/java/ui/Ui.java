@@ -155,6 +155,7 @@ public class Ui {
         }
     }
 
+    //@@author Jas0n-yxy
     /**
      * Displays a message indicating that applications have been sorted.
      *
@@ -175,6 +176,7 @@ public class Ui {
         String order = rev ? " (reverse order)." : ".";
         System.out.println("Sorted by " + field + order);
     }
+    //@@author
 
     /**
      * Displays a message indicating that an application's status has been updated.
@@ -222,13 +224,18 @@ public class Ui {
                 tag INDEX add/TAG                                           Add a tag to an application
                 tag INDEX remove/TAG                                        Remove a tag from an application
                 list                                                        List all job applications
-                sort                                                        Sort applications by date
+                sort                                                        Sort applications by date (default)
+                sort date                                                   Sort applications by date
+                sort company                                                Sort applications by company
+                sort status                                                 Sort applications by status
+                sort date reverse                                           Sort applications by date (descending)
+                sort company reverse                                        Sort applications by company (descending)
+                sort status reverse                                         Sort applications by status (descending)
                 search c/COMPANY                                            Search applications by company
                 search p/POSITION                                           Search applications by position
                 search s/STATUS                                             Search applications by status
                 help                                                        Show this message
                 bye                                                         Exit the application""";
-
         System.out.println(helpMessage);
         System.out.println(HORIZONTAL_LINE);
     }
