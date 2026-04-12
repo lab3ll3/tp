@@ -28,13 +28,25 @@ The `UI` component,
 
 The **Parser** component is responsible for interpreting raw user input and converting it into structured `ParsedCommand` objects.
 
-![Parser Architecture](diagrams/component-parser/parser-architecture.png)
-*Figure 1: Parser Component Architecture*
+![Class Structure](diagrams/component-parser/parser-class-structure.png)
+*Figure 1: Class Structure*
 
-The following diagram illustrates how the parser processes a typical `edit` command:
+The EditorParser handles the parsing of edit commands. 
 
-![Parser Flow](diagrams/component-parser/parser-flow.png)
-*Figure 2: Parser Flow for Edit Command*
+![Seqeuence Diagram](diagrams/component-parser/parser-sequence diagram.png)
+*Figure 2: Sequence Diagram*
+
+The sequence diagram shows the interaction flow for parsing an edit command.
+
+![ParsedCommand](diagrams/component-parser/parser-parsed-command.png)
+*Figure 3: ParsedCommand*
+
+When parsing is successful, the EditorParser returns a ParsedCommand object.
+
+![Parser Routing](diagrams/component-parser/parser-routing.png)
+*Figure 4: Integration with Main Parser*
+
+The main Parser routes the edit command to EditorParser based on the command keyword.
 
 ### Storage Component
 

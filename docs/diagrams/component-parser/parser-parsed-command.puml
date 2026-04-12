@@ -1,0 +1,30 @@
+@startuml
+!theme plain
+title ParsedCommand - Edit Command Data
+
+class ParsedCommand {
+    - CommandType type
+    - int index
+    - String newCompany
+    - String newPosition
+    - String newDate
+    - String newStatus
+    + getType() : CommandType
+    + getIndex() : int
+    + getNewCompany() : String
+    + getNewPosition() : String
+    + getNewDate() : String
+    + getNewStatus() : String
+}
+
+note right of ParsedCommand
+  For "edit 1 c/Google p/SWE d/2024-09-12":
+
+  type = EDIT
+  index = 0
+  newCompany = "Google"
+  newPosition = "SWE"
+  newDate = "2024-09-12"
+  newStatus = null
+end note
+@enduml
