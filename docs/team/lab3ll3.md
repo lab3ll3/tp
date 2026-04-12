@@ -55,7 +55,7 @@ Why it's complete:
 - Encapsulates all parsing logic in one place, separate from command execution
 - Uses a CommandType enum for clean routing
 - Returns a ParsedCommand object containing all parsed data 
-- Subparsers (AddParser, DeleteParser, EditParser, etc.) each handle one command, making the system easy to extend
+- Subparsers (ApplicationParser, DeleterParser, EditorParser, etc.) each handle one command, making the system easy to extend
 
 Implementation complexity:
 - Designed a prefix-based parsing algorithm that correctly captures multi-word values (e.g., c/Amazon Web Services)
@@ -66,85 +66,31 @@ Implementation complexity:
 ### Team Contributions
 - Communicator for the team (set internal deadlines, set todos for team)
 - Helped resolve merge conflicts in JobPilot.java 
+- Reviewed teammates pull request
 
-## Contributions to Developer Guide
-### Parser Component
+### Developer Guide Contributions:
+#### Parser Component Documentation
 
-The **Parser** component is responsible for interpreting raw user input and converting it into structured `ParsedCommand` objects.
+- Documented the modular parser architecture with CommandType enum and ParsedCommand data class. 
+- Illustrated prefix-based parsing logic (c/, p/, d/, s/) that handles multi-word values. 
+- Included PlantUML class diagram and sequence diagram for parser flow.
 
-![Parser Architecture](../diagrams/component-parser/parser-architecture.png)
-*Figure 1: Parser Component Architecture*
+#### Editor Feature Documentation
+- Documented the edit command for partial updates of company, position, date, and status. 
+- Covered error handling for invalid indices, empty fields, and malformed dates. 
+- Included PlantUML sequence diagram and error handling flow diagram.
 
-The following diagram illustrates how the parser processes a typical `edit` command:
+#### User Stories
+- Authored user stories for add, list, delete, edit, search, sort, filter, tag, and persistent storage features.
 
-![Parser Flow](../diagrams/component-parser/parser-flow.png)
-*Figure 2: Parser Flow for Edit Command*
+### Contributions to User Guide
+#### Add Application Feature
+- Documented the add command for creating new job applications with company, position, and submission date. 
+- Specified the required format and field descriptions (c/COMPANY, p/POSITION, d/DATE). 
+- Included example usage and expected output.
 
-### Edit Application Feature
-
-#### Sequence Diagram
-
-![Edit Sequence](../diagrams/editor/sequence.png)
-*Figure 3: Edit Feature Sequence Diagram*
-
-**Error Handling**
-
-| Error Scenario | Condition | User Response |
-|----------------|-----------|---------------|
-| Missing Index | User enters `edit` without a number | "Please provide an index. Example: edit 1 c/Google" |
-| Invalid Index | Index is 0, negative, or exceeds list size | "Invalid application number! You have X application(s)." |
-| No Fields | User provides index but no fields to update | "No valid fields to update! Use: c/, p/, d/, s/" |
-| Invalid Date Format | Date not in `YYYY-MM-DD` format | "Invalid date! Use YYYY-MM-DD (e.g., 2024-09-12)" |
-
-### User Stories
-| Version | As a ... | I want to ...                                                     | So that I can ...                      |
-|------|----------|-------------------------------------------------------------------|----------------------------------------|
-| v1.0 | user | add a job application with company, position, and submission date | keep track of where I have applied     |
-| v1.0 | user | list all my applications                                          | see a summary of my applications       |
-| v1.0 | user | delete applications                                               | manage my application list effectively |
-| v1.0 | user | update application status                                         | track my application progress          |
-| v1.0 | user | sort applications by submission date                              | prioritize older applications          |
-| v2.0 | user | store my applications persistently | come back to it at different points in time                |
-| v2.0 | user | edit an existing application | update details without deleting and re-adding applications |
-| v2.0 | user | search applications by company name | locate applications for specific companies                 |
-| v2.0 | user | add industry tags to applications | categorize applications by industry                        |
-| v2.0 | user | filter applications by status | focus on applications at a specific stage                  |
-
-
-## Contributions to User Guide
-### Adding an application: add
-Adds a new job application to JobPilot.
-
-Format: add c/COMPANY p/POSITION d/DATE
-- c/COMPANY - Name of the company
-- p/POSITION - Job title/position
-- d/DATE - Application submission date in YYYY-MM-DD format
-
-Example:
-add c/Google p/SE manager d/2025-03-10
-
-Example output:
-Added: Google | SE manager | 2025-03-10 | Pending
-
-### Editing an application: edit
-Edits an existing application's fields. Only specified fields will be updated.
-
-Format: edit INDEX [c/COMPANY] [p/POSITION] [d/DATE] [s/STATUS]
-
-- INDEX - Position of the application in the list (from list command)
-- c/COMPANY - (Optional) New company name
-- p/POSITION - (Optional) New position title
-- d/DATE - (Optional) New submission date in YYYY-MM-DD format
-- s/STATUS - (Optional) New status
-
-Examples:
-- edit 1 c/Apple - Change company only
-- edit 2 p/Senior Engineer - Change position only
-- edit 3 d/2027-01-09 - Change date only
-- edit 1 c/Google p/SWE d/2024-09-12 s/Offer - Change multiple fields
-
-Example output:
-Updated application:
-Apple | SE manager | 2025-03-10 | OFFER (Note: Negotiate salary) | Tags: [TECH]
-
-
+#### Edit Application Feature
+- Documented the edit command for modifying existing applications with partial updates. 
+- Specified the flexible format with optional fields (c/COMPANY, p/POSITION, d/DATE, s/STATUS). 
+- Provided multiple examples demonstrating single-field and multi-field edits. 
+- Included example output showing the updated application with status and tags.

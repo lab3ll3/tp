@@ -119,8 +119,8 @@ The following diagram illustrates how the `CommandRunner` processes different co
 
 #### Sequence Diagram
 
-![Edit Sequence](diagrams/editor/sequence.png)
-*Figure 3: Edit Feature Sequence Diagram*
+![Editor Sequence Diagram](diagrams/editor/sequence.png)
+*Figure 3: Editor Feature Sequence Diagram*
 
 **Error Handling**
 
