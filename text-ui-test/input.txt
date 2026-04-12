@@ -8,9 +8,9 @@ tag 2 add/FINANCE
 tag 2 add/DATA
 tag 3 add/TECH
 tag 3 add/INTERN
-status 1 set/OFFER note/Negotiate salary
-status 2 set/Interview note/Case study prep
-status 3 set/Pending note/Waiting for reply
+status 1 s/OFFER note/Negotiate salary
+status 2 s/Interview note/Case study prep
+status 3 s/Pending note/Waiting for reply
 search c/Google
 search c/micro
 search p/intern
