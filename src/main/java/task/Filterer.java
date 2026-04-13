@@ -9,7 +9,6 @@ import java.util.logging.Level;
 //@@author Aswin-RajeshKumar
 /**
  * Utility class to handle filtering of job applications.
- * Implemented for v2.0 milestone.
  */
 public class Filterer {
 

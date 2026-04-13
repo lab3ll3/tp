@@ -1,8 +1,6 @@
 ' @@author Aswin-RajeshKumar
 @startuml
 skinparam Style strictuml
-skinparam SequenceMessageAlignment center
-
 actor User
 participant ":Ui" as Ui
 participant ":CommandRunner" as CommandRunner
@@ -12,7 +10,7 @@ participant "app:Application" as Application
 User -> Ui : "status 1 s/OFFER note/Negotiate salary"
 activate Ui
 
-Ui -> CommandRunner : run("status 1 s/OFFER note/Negotiate salary")
+Ui -> CommandRunner : run(command)
 activate CommandRunner
 
 CommandRunner -> StatusParser : parse("1 s/OFFER note/Negotiate salary")
@@ -31,8 +29,10 @@ Application --> CommandRunner
 deactivate Application
 
 CommandRunner -> Ui : showStatusUpdated(app)
-deactivate CommandRunner
-
+activate Ui
 Ui --> User : "Updated Status: ... OFFER (Note: Negotiate salary)"
+deactivate Ui
+
+deactivate CommandRunner
 deactivate Ui
 @enduml
