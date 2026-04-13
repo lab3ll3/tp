@@ -471,11 +471,14 @@ The following sequence diagram illustrates the integrated flow of updating statu
 | **Strict Junk Zone Validation**   | Prevents user ambiguity by ensuring all text following the index is associated with a valid prefix.                             |
 | **Dedicated Sub-Parser**          | Encapsulates complex prefix-searching logic (e.g., handling `note/` inside a status string) away from the main command routing. |
 
-## Product Sc
+## Product Scope
+
 ### Target User Profile
+
 Computing students applying for jobs and want to keep track of their applications.
 
 ### Value Proposition
+
 In the current job market, applying to many roles has become the norm. As such, JobPilot acts as a
 tracker to allow users to get a bird's eye view of all their applications and manage them effectively.
 
@@ -576,18 +579,18 @@ tracker to allow users to get a bird's eye view of all their applications and ma
 
 ### Delete Feature Testing
 
-| Test               | Command      | Expected                                                                                                                |
-|--------------------|--------------|-------------------------------------------------------------------------------------------------------------------------|
-| Valid delete       | `delete 1`   | First application removed from list. Deleted application details and remaining count shown. `JobPilotData.txt` updated. |
-| Invalid index      | `delete 0`   | `JobPilotException` thrown indicating invalid index. No deletion occurs. Storage remains unchanged.                     |
-| Missing index      | `delete`     | `JobPilotException` thrown indicating invalid index. No deletion occurs. Data file remains unchanged.                   |
-| Non-numeric index  | `delete abc` | `JobPilotException` thrown due to non-numeric input. No deletion occurs. Storage remains consistent.                    |
-| Index out of range | `delete N+1` | `JobPilotException` thrown indicating index is out of bounds. No deletion occurs. Data file remains unchanged.          |
+| Test | Command | Expected |
+|---|---|---|
+| Valid delete | `delete 1` | First application removed from list. Deleted application details and remaining count shown. `JobPilotData.txt` updated. |
+| Invalid index | `delete 0` | `JobPilotException` thrown indicating invalid index. No deletion occurs. Storage remains unchanged. |
+| Missing index | `delete` | `JobPilotException` thrown indicating invalid index. No deletion occurs. Data file remains unchanged. |
+| Non-numeric index | `delete abc` | `JobPilotException` thrown due to non-numeric input. No deletion occurs. Storage remains consistent. |
+| Index out of range | `delete N+1` | `JobPilotException` thrown indicating index is out of bounds. No deletion occurs. Data file remains unchanged. |
 
 <div style="page-break-after: always;"></div>
 
 ### Storage Feature Testing
 
-| Test                    | Action                                     | Expected                                                                                                                                               |
-|-------------------------|--------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Test | Action | Expected                                                                                                                                               |
+|---|---|--------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Save after modification | Perform `add`, `edit`, or `delete` command | `Storage.saveToFile()` is called. `JobPilotData.txt` is updated with the latest application list. On next launch, the list reflects all modifications. |
