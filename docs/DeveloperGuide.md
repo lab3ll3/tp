@@ -354,18 +354,24 @@ The following sequence diagram illustrates the flow of adding a tag to an applic
 
 #### Implementation Details
 
-The **Filter by Status** mechanism allows users to retrieve a subset of applications matching a specific status (e.g., "OFFER"). This is implemented via a dedicated `Filterer` utility class and a `FilterParser` sub-parser, following the **Separation of Concerns** principle used in the `Delete` and `Edit` features.
+The **Filter by Status** mechanism allows users to retrieve a subset of applications matching a specific recruitment status. This feature is implemented using a dedicated `Filterer` utility class and a `FilterParser` sub-parser, following the **Separation of Concerns** principle used across other commands such as `delete` and `edit`.
 
 The operations are handled via the following methods:
-* `FilterParser#parse(String)` — Extracts the status query from the raw input (e.g., extracts "OFFER" from `filter s/OFFER`).
-* `Filterer#filterByStatus(ArrayList<Application>, String)` — Iterates through the list, performs the logical match, and delegates the display to the `Ui` class.
+* `FilterParser#parse(String)` — Extracts and validates the status query from the raw input (e.g., extracts `OFFER` from `filter s/OFFER`), while enforcing correct prefix usage.
+* `Filterer#filterByStatus(ArrayList<Application>, String)` — Iterates through the application list and performs case-insensitive partial matching using `contains()`, before delegating results to the `Ui` component.
 
-**Execution Summary**
+---
+
+#### Execution Summary
 
 1. `Parser` routes `filter` input to `FilterParser`.
-2. `FilterParser` validates `s/` format and returns `ParsedCommand(type=FILTER, searchTerm)`.
-3. `CommandRunner` delegates to `Filterer.filterByStatus(...)`.
-4. `Filterer` performs case-insensitive partial status matching and sends results to `Ui.showFilterResults`.
+2. `FilterParser` validates format integrity (ensuring `s/` is present and no junk text exists before the prefix).
+3. The parsed status keyword is extracted and returned as a `ParsedCommand`.
+4. `CommandRunner` delegates execution to `Filterer.filterByStatus(...)`.
+5. `Filterer` performs case-insensitive partial matching on application status.
+6. Matching results are passed to `Ui.showFilterResults()` for display.
+
+---
 
 #### Sequence Diagram
 
@@ -373,14 +379,17 @@ The following sequence diagram illustrates the flow of filtering applications by
 
 ![Filter Sequence Diagram](diagrams/filter/sequence.png)
 
+---
 
 #### Design Rationale
 
 | Decision | Rationale |
 |----------|-----------|
-| **Separate `Filterer` Class** | Maintains the Single Responsibility Principle and simplifies unit testing. |
-| **Case-Insensitive `contains()`** | Provides a "search-like" experience, allowing partial matches (e.g., "OFF" matches "OFFER"). |
+| **Separate `Filterer` Class** | Maintains the Single Responsibility Principle by isolating filtering logic from parsing and UI responsibilities, improving modularity and testability. |
+| **Case-Insensitive Partial Matching (`contains`)** | Supports flexible "smart matching" behaviour, allowing partial inputs such as `off` to match `OFFER`, and `p` to match both `PENDING` and `PROCESSING`. This aligns with the User Guide specification. |
+| **Linear Scan over `ArrayList`** | Simple and efficient for the expected dataset size (≤ 500 applications), avoiding unnecessary complexity while maintaining acceptable performance. |
 
+---
 
 #### Error Handling
 
@@ -389,43 +398,73 @@ The following sequence diagram illustrates the flow of filtering applications by
 | Missing Arguments | User enters `filter` alone | "Filter command is missing arguments! Use: filter s/STATUS" |
 | Missing Prefix | User enters `filter PENDING` | "Invalid filter format! Expected: filter s/STATUS" |
 | Empty Value | User enters `filter s/` | "The filter value cannot be empty! Please provide a status after 's/'." |
+| Format Violation | Junk text appears before `s/` | "Invalid filter format! Unexpected input before prefix." |
+
+---
 
 #### Design Considerations
 
-* `FilterParser` and `Filterer` are kept separate so parsing and matching can evolve independently.
-* Partial matching (`contains`) trades strictness for convenience, consistent with search behavior.
+* The parser enforces **format integrity**, rejecting any invalid or "junk" text placed between the command keyword and the `s/` prefix. It also handles extra spaces and tab characters to ensure robust input parsing.
 
-### Separate Notes from Status Feature
+* Case-insensitive partial matching is implemented to support **smart matching behaviour**, where inputs such as `off`, `Off`, or `OFF` correctly match `OFFER`.
+
+* The system performs a linear scan over the `ArrayList<Application>`, which is sufficient for the expected workload (≤ 500 applications). This keeps the implementation simple and maintainable, while still meeting performance requirements.
+
+* `FilterParser` and `Filterer` are intentionally separated to ensure clear separation between parsing, business logic, and UI concerns, allowing each component to evolve independently.
+
+### Application Status and Notes Feature
 
 #### Implementation Details
 
-This feature separates the original `status` field into two independent fields: `status` (application progress) and `notes` (user comments). This allows users to update status and notes independently without overwriting the other.
+The **Status** feature is a core component of JobPilot that tracks an application's recruitment stage. This was enhanced with a **Notes** sub-feature to allow users to store specific feedback or interview details (e.g., salary negotiations) without cluttering the primary status field. Both fields operate independently, ensuring that updating one does not accidentally overwrite the other.
 
-**Command Format**: `status INDEX s/STATUS note/NOTES`
+The feature is managed through the following logic:
+- `Application` — Maintains two distinct fields: `status` (for progress tracking) and `notes` (for detailed feedback).
+- `StatusParser` — A specialized sub-parser that extracts the index and identifies the optional `s/` (status) and `note/` (notes) prefixes.
+- `CommandRunner` — Orchestrates the conditional update logic to ensure only the specified fields are modified.
 
-**Example Usage**:
-- `status 1 s/OFFER note/Negotiate salary` — Update both status and notes
-- `status 2 s/INTERVIEW` — Update status only (notes unchanged)
-- `status 3 note/Follow up next week` — Update notes only (status unchanged)
+**Execution Flow:**
 
-The feature is implemented using the following components:
-- `Application` — Stores `status` and `notes` as separate fields with getter/setter methods
-- `StatusParser` — Parses the raw input to extract index, status value, and notes
-- `CommandRunner` — Routes the command and updates the target application
+**Step 1.** The user inputs a command like `status 1 s/OFFER note/Negotiate salary`. The `Ui` captures this and passes it to the main `Parser`.
 
-Given below is an example usage scenario demonstrating how the Status mechanism behaves at each step.
+**Step 2.** The `Parser` identifies the `status` keyword and delegates the raw string to `StatusParser#parse()`.
 
-**Step 1.** The user executes `status 1 s/OFFER note/Negotiate salary`. The command is read by `Ui` and passed to `Parser`.
+**Step 3.** `StatusParser` performs **Junk Zone** validation to ensure no invalid text exists between the index and prefixes. It then extracts the values into a `ParsedCommand` object. If `s/` or `note/` is missing, the corresponding field in `ParsedCommand` remains `null`.
 
-**Step 2.** `Parser` identifies the `status` keyword and delegates to `StatusParser.parse()`.
+**Step 4.** `CommandRunner#run()` validates the index against the current list size and retrieves the target `Application`.
 
-**Step 3.** `StatusParser` extracts the index `1`, status value `OFFER` (after `s/`), and notes `Negotiate salary` (after `note/`). It returns a `ParsedCommand` object with type `STATUS`, index, status, and notes.
+**Step 5.** **Conditional Update:** The `CommandRunner` checks the `ParsedCommand`:
+- If `statusValue != null`, it calls `app.setStatus(status)`.
+- If `note != null`, it calls `app.setNotes(note)`.
+  *This ensures that a command like `status 1 s/REJECTED` leaves existing notes untouched.*
 
-**Step 4.** `CommandRunner` validates the index is within bounds and retrieves the target `Application`.
+**Step 6.** `Ui#showStatusUpdated(app)` is invoked to display the finalized state of the application to the user.
 
-**Step 5.** `CommandRunner` calls `app.setStatus(status)` if status is provided, and `app.setNotes(notes)` if notes are provided.
+#### Sequence Diagram
 
-**Step 6.** `Ui.showStatusUpdated(app)` displays the updated application.
+The following sequence diagram illustrates the integrated flow of updating status and notes, highlighting the sub-parser delegation and the conditional update logic:
+
+![Status Sequence Diagram](diagrams/status/sequence.png)
+
+#### Error Handling
+
+| Error Scenario | Condition | User Response |
+|----------------|-----------|---------------|
+| **Missing Index** | User enters `status s/OFFER` without index | "Please provide an index. Example: status 1 s/OFFER" |
+| **Invalid Index** | Index is 0, negative, or exceeds list size | "Invalid application number! You have X application(s)." |
+| **Junk Zone Text** | Unexpected text before prefixes (e.g., `status 1 updated s/OFFER`) | "Invalid format! Unexpected text before prefixes: updated" |
+| **Empty Status** | User enters `status 1 s/` | "Status value cannot be empty!" |
+| **Missing Arguments**| User enters `status 1` without prefixes | "No status or note provided! Use s/ or note/." |
+
+#### Design Rationale
+
+| Decision | Rationale |
+|----------|-----------|
+| **Primary Status Field** | Serves as the key metric for sorting and filtering; normalized to uppercase for consistent searching. |
+| **Independent Notes Sub-feature** | Decouples subjective user comments from objective recruitment stages, preventing data loss during status transitions. |
+| **Conditional Setter Execution** | By only calling setters for non-null `ParsedCommand` fields, the system supports partial updates, improving CLI efficiency. |
+| **Strict Junk Zone Validation** | Prevents user ambiguity by ensuring all text following the index is associated with a valid prefix. |
+| **Dedicated Sub-Parser** | Encapsulates complex prefix-searching logic (e.g., handling `note/` inside a status string) away from the main command routing. |
 
 #### Sequence Diagram
 
@@ -445,13 +484,13 @@ The following sequence diagram illustrates the flow of updating status and notes
 
 #### Design Rationale
 
-| Decision                            | Rationale |
+| Decision | Rationale |
 |-------------------------------------|----------|
-| Separate `status` and `notes` fields | Improves data clarity and allows independent updates |
-| Optional `note/` field              | Supports updating status without overwriting existing notes |
-| Backward compatibility              | Existing applications with combined format are migrated correctly |
-| Dedicated `StatusParser`            | Maintains separation of concerns and simplifies testing |
-| `s/` and `note/` prefixes           | Consistent with existing command patterns (`c/`, `p/`, `d/`) |
+| Separate `status` and `notes` fields | Improves data clarity and allows independent updates to application progress and feedback without overwriting existing information |
+| Optional `note/` field | Allows users to update either status, notes, or both in a single command, improving flexibility |
+| Dedicated `StatusParser` | Ensures parsing logic for `status` commands is isolated from other command types, improving maintainability and testability |
+| Flexible prefix ordering (`s/` and `note/`) | Supports user-friendly input where the order of fields does not matter (e.g., `s/OFFER note/X` or `note/X s/OFFER`) |
+| Consistent prefix-based syntax | Aligns with existing command design (`c/`, `p/`, `d/`, `s/`, `note/`) for a uniform CLI experience |
 
 ## Product Scope
 ### Target User Profile
