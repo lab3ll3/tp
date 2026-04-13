@@ -32,10 +32,8 @@ delete INDEX                            Delete an application
 ...
 help                                    Show this message
 bye                                     Exit the application
-____________________________________________________
+___________________________________________________________________________
 ```
-
-_Note:_ In the `help` output above, `search [c/COMPANY] [p/POSITION] [s/STATUS]` means you use **any one** of these forms per command (company **or** position **or** status), not several prefixes in the same line.
 
 ### Adding an application: add
 Adds a new job application to JobPilot.
@@ -90,7 +88,7 @@ Example output:
 Deleted application:
 Google | SE manager | 2025-03-10 | INTERVIEW
 You have 4 application(s) left.
-___________________________________________________________________
+___________________________________________________________________________
 ```
 
 ### Updating application status: `status`
@@ -113,7 +111,7 @@ ___________________________________________________________________
 ```text
 Status updated:
 Google | SE manager | 2025-03-10 | INTERVIEW (Note: Technical round next Tuesday)
-___________________________________________________________________
+___________________________________________________________________________
 ```
 
 - `status 2 s/REJECTED`
@@ -121,7 +119,7 @@ ___________________________________________________________________
 ```text
 Status updated:
 Amazon | Data Analyst | 2025-03-08 | REJECTED
-___________________________________________________________________
+___________________________________________________________________________
 ```
 
 - `status 3 note/Salary negotiation in progress`
@@ -129,7 +127,7 @@ ___________________________________________________________________
 ```text
 Status updated:
 Microsoft | SDE Intern | 2025-03-12 | PENDING (Note: Salary negotiation in progress)
-___________________________________________________________________
+___________________________________________________________________________
 ```
 
 ### Filtering applications by status: `filter`
@@ -155,7 +153,7 @@ Filtered by status: OFFER
 Found 2 application(s) with status 'OFFER':
 1. Google | SE manager | 2025-03-10 | OFFER (Note: Salary negotiation) | Tags: [TECH]
 2. Shopee | Backend Intern | 2025-03-15 | OFFER (Note: Pending acceptance)
-___________________________________________________________________
+___________________________________________________________________________
 ```
 - `filter s/Pend`
 
@@ -163,7 +161,7 @@ ___________________________________________________________________
 Filtered by status: PEND
 Found 1 application(s) with status 'PEND':
 1. Meta | Frontend | 2026-06-01 | PENDING
-___________________________________________________________________
+___________________________________________________________________________
 ```
 
 - `filter s/X`
@@ -172,7 +170,7 @@ ___________________________________________________________________
 Filtered by status: X
 Found 1 application(s) with status 'X':
 1. Acme | Dev | 2026-01-01 | X
-___________________________________________________________________
+___________________________________________________________________________
 ```
 
 ### Managing industry tags: `tag`
@@ -200,7 +198,7 @@ Example output:
 
 ```text
 Added tag: TECH -> Google | SE manager | 2025-03-10 | PENDING | Tags: [TECH]
-___________________________________________________________________
+___________________________________________________________________________
 ```
 
 ### Listing
@@ -216,7 +214,7 @@ Here are your applications:
 1. Google | SE manager | 2025-03-10 | Pending
 2. Amazon | Data Analyst | 2025-03-08 | Pending
 3. Microsoft | SDE Intern | 2025-03-12 | Pending
-___________________________________________________________________
+___________________________________________________________________________
 ```
 
 ### Searching Applications
@@ -241,7 +239,7 @@ Examples:
 ```text
 Found 1 application(s) matching 'c/google':
 1. Google | SE manager | 2025-03-10 | OFFER (Note: Negotiate salary) | Tags: [TECH]
-___________________________________________________________________
+___________________________________________________________________________
 ```
 
 - `search c/micro`
@@ -249,7 +247,7 @@ ___________________________________________________________________
 ```text
 Found 1 application(s) matching 'c/micro':
 1. Microsoft | SDE Intern | 2025-03-12 | PENDING (Note: Waiting for reply) | Tags: [TECH, INTERN]
-___________________________________________________________________
+___________________________________________________________________________
 ```
 
 - `search p/intern`
@@ -257,7 +255,7 @@ ___________________________________________________________________
 ```text
 Found 1 application(s) matching 'p/intern':
 1. Microsoft | SDE Intern | 2025-03-12 | PENDING (Note: Waiting for reply) | Tags: [TECH, INTERN]
-___________________________________________________________________
+___________________________________________________________________________
 ```
 
 - `search s/offer`
@@ -265,7 +263,7 @@ ___________________________________________________________________
 ```text
 Found 1 application(s) matching 's/offer':
 1. Google | SE manager | 2025-03-10 | OFFER (Note: Negotiate salary) | Tags: [TECH]
-___________________________________________________________________
+___________________________________________________________________________
 ```
 
 ### Sorting Applications: `sort`
@@ -296,7 +294,7 @@ Example output:
 
 ```text
 Sorted by submission date.
-___________________________________________________________________
+___________________________________________________________________________
 ```
 
 ### Exiting the program: bye
@@ -309,7 +307,7 @@ Example output:
 
 ```text
 Bye! You added 5 application(s).
-___________________________________________________________________
+___________________________________________________________________________
 ```
 
 ## FAQ
@@ -344,17 +342,17 @@ ___________________________________________________________________
 
 ## Command Summary
 
-| Action | Format, Examples |
-|--------|-----------------------------------------------------------------------------------------------------------|
-| Add | `add c/COMPANY p/POSITION d/DATE` <br> e.g., `add c/Google p/Software Engineer d/2026-03-29` |
-| Edit | `edit INDEX c/COMPANY p/POSITION d/DATE s/STATUS` <br> e.g., `edit 2 c/Google p/Backend Engineer s/Interview` |
-| Delete | `delete INDEX` <br> e.g., `delete 1` |
-| Status | `status INDEX s/STATUS note/NOTE` <br> e.g., `status 1 s/Interview note/Phone screening completed` |
-| Filter | `filter s/STATUS` <br> e.g., `filter s/Pending` |
-| Tag Add | `tag INDEX add/TAG` <br> e.g., `tag 1 add/Tech` |
-| Tag Remove | `tag INDEX remove/TAG` <br> e.g., `tag 1 remove/Tech`|
-| List | `list` |
+| Action | Format, Examples                                                                                                                         |
+|--------|------------------------------------------------------------------------------------------------------------------------------------------|
+| Add | `add c/COMPANY p/POSITION d/DATE` <br> e.g., `add c/Google p/Software Engineer d/2026-03-29`                                             |
+| Edit | `edit INDEX [c/COMPANY] [p/POSITION] [d/DATE] [s/STATUS]` <br> e.g., `edit 2 c/Google p/Backend Engineer s/Interview`                    |
+| Delete | `delete INDEX` <br> e.g., `delete 1`                                                                                                     |
+| Status | `status INDEX [s/STATUS] [note/NOTE]` <br> e.g., `status 1 s/Interview note/Phone screening completed`                                   |
+| Filter | `filter s/STATUS` <br> e.g., `filter s/Pending`                                                                                          |
+| Tag Add | `tag INDEX add/TAG` <br> e.g., `tag 1 add/Tech`                                                                                          |
+| Tag Remove | `tag INDEX remove/TAG` <br> e.g., `tag 1 remove/Tech`                                                                                    |
+| List | `list`                                                                                                                                   |
 | Sort | `sort` <br>`sort date` <br>`sort company` <br>`sort status` <br>`sort date reverse` <br>`sort company reverse` <br>`sort status reverse` |
-| Search | `search c/COMPANY` <br> `search p/POSITION` <br> `search s/STATUS` <br> e.g., `search c/Google` |
-| Help | `help` |
-| Exit | `bye` |
+| Search | `search c/COMPANY` <br> `search p/POSITION` <br> `search s/STATUS` <br> e.g., `search c/Google`                                          |
+| Help | `help`                                                                                                                                   |
+| Exit | `bye`                                                                                                                                    |
