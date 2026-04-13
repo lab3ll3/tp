@@ -93,52 +93,87 @@ You have 4 application(s) left.
 ___________________________________________________________________
 ```
 
-### Updating application status: 'status'
-Updates the recruitment progress of a specific job application and allows for independent note-taking. This allows you to track interview feedback or offer details separately from the company info.
+### Updating application status: `status`
 
-Format: status INDEX [s/STATUS] [note/NOTE]
+- Updates the recruitment progress of a specific application and allows for independent note-taking.
+- Facilitates tracking interview feedback or offer details separately from the core company information.
+- Supports **Partial Updates**: You can update only the status, only the note, or both at once.
 
-Updates the application at the specified INDEX.
+**Precision Parsing:** To ensure data integrity, JobPilot rejects any "junk text" placed between the index and the prefixes. It is also resilient to extra spaces or **Tab** characters.
 
-s/STATUS: The current stage (e.g., Invited, Rejected, Offer).
+**Format Integrity:** If a field is omitted, the existing value is preserved. The order of `s/` and `note/` does not matter.
 
-note/NOTE: (Optional) Additional context, comments, or interview feedback.
+**Format:**
+`status INDEX [s/STATUS] [note/NOTE]`
 
-Flexibility: You can update both fields at once, or just one. If a field is omitted, the existing value is preserved. The order of s/ and note/ does not matter.
+**Examples**
 
-Examples:
+- `status 1 s/Interview note/Technical round next Tuesday`
 
-status 1 s/Interview note/Scheduled for next Tuesday
-
-status 2 s/Rejected (Previous note remains unchanged)
-
-status 3 note/Salary negotiation in progress (Status remains unchanged)
-
-Example Output:
-
-Plaintext
+```text
 Status updated:
-Google | SE manager | 2025-03-10 | INTERVIEW (Note: Scheduled for next Tuesday) | Tags: [TECH]
+Google | SE manager | 2025-03-10 | INTERVIEW (Note: Technical round next Tuesday)
+___________________________________________________________________
+```
 
-### Filtering applications by status: 'filter'
-Retrieves all applications that match a specific status. This is useful for focusing only on active leads.
+- `status 2 s/REJECTED`
 
-Format: filter s/STATUS
+```text
+Status updated:
+Amazon | Data Analyst | 2025-03-08 | REJECTED
+___________________________________________________________________
+```
 
-The search is case-insensitive and supports partial matching (e.g., `filter s/off` will find applications with the status "OFFER").
+- `status 3 note/Salary negotiation in progress`
 
-Examples:
+```text
+Status updated:
+Microsoft | SDE Intern | 2025-03-12 | PENDING (Note: Salary negotiation in progress)
+___________________________________________________________________
+```
 
-filter s/OFFER
+### Filtering applications by status: `filter`
 
-filter s/pending
+- Retrieves all applications that match a specific recruitment status.
+- Uses a **case-insensitive partial search**.
 
-Example Output:
+**Smart Matching:** The filter is designed to be flexible. For example, `filter s/off` will find applications with the status "OFFER", and `filter s/p` will find both "PENDING" and "PROCESSING".
 
-Plaintext
+**Empty or incomplete input:** The keyword after `s/` must not be empty. If you run `filter` alone or `filter s/` without a keyword, you will see an error: `The filter value cannot be empty! Please provide a status after 's/'.`
+
+**Format Integrity:** To ensure search accuracy, the command rejects "junk text" placed between the command word and the prefix. It is also resilient to extra spaces or **Tab** characters.
+
+**Format:**
+`filter s/STATUS`
+
+**Examples:**
+
+- `filter s/OFFER`
+
+```text
+Filtered by status: OFFER
 Found 2 application(s) with status 'OFFER':
-1. Google | SE manager | 2025-03-10 | OFFER (Note: Salary negotiation)
+1. Google | SE manager | 2025-03-10 | OFFER (Note: Salary negotiation) | Tags: [TECH]
 2. Shopee | Backend Intern | 2025-03-15 | OFFER (Note: Pending acceptance)
+___________________________________________________________________
+```
+- `filter s/Pend`
+
+```text
+Filtered by status: PEND
+Found 1 application(s) with status 'PEND':
+1. Meta | Frontend | 2026-06-01 | PENDING
+___________________________________________________________________
+```
+
+- `filter s/X`
+
+```text
+Filtered by status: X
+Found 1 application(s) with status 'X':
+1. Acme | Dev | 2026-01-01 | X
+___________________________________________________________________
+```
 
 ### Managing industry tags: `tag`
 
@@ -310,11 +345,11 @@ ___________________________________________________________________
 ## Command Summary
 
 | Action | Format, Examples |
-|--------|----------------------------------------------------------------------------------------------------------------------|
+|--------|-----------------------------------------------------------------------------------------------------------|
 | Add | `add c/COMPANY p/POSITION d/DATE` <br> e.g., `add c/Google p/Software Engineer d/2026-03-29` |
-| Edit | `edit INDEX [c/COMPANY] [p/POSITION] [d/DATE] [s/STATUS]` <br> e.g., `edit 2 c/Google p/Backend Engineer s/Interview` |
+| Edit | `edit INDEX c/COMPANY p/POSITION d/DATE s/STATUS` <br> e.g., `edit 2 c/Google p/Backend Engineer s/Interview` |
 | Delete | `delete INDEX` <br> e.g., `delete 1` |
-| Status | `status INDEX [s/STATUS] [note/NOTE]` <br> e.g., `status 1 s/Interview note/Phone screening completed` |
+| Status | `status INDEX s/STATUS note/NOTE` <br> e.g., `status 1 s/Interview note/Phone screening completed` |
 | Filter | `filter s/STATUS` <br> e.g., `filter s/Pending` |
 | Tag Add | `tag INDEX add/TAG` <br> e.g., `tag 1 add/Tech` |
 | Tag Remove | `tag INDEX remove/TAG` <br> e.g., `tag 1 remove/Tech`|
