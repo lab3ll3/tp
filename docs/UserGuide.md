@@ -340,6 +340,8 @@ ___________________________________________________________________________
 **A**: You can use the application on multiple computers, but changes made on one computer will not automatically sync 
        to the other unless you manually transfer the updated data file.
 
+<div style="page-break-after: always;"></div>
+
 ## Command Summary
 
 | Action | Format, Examples                                                                                                                         |

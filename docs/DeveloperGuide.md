@@ -172,6 +172,8 @@ The following sequence diagram shows the flow of deleting an application:
 
 ![Sequence](diagrams/delete/sequence.png)
 
+<div style="page-break-after: always;"></div>
+
 #### Design Considerations
 
 **Aspect: Command delegation and Separation of Concerns:**
