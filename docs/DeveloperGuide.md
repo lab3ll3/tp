@@ -54,6 +54,8 @@ The **API** of this component is specified in `Storage.java`.
 
 ![Storage Component](diagrams/component-storage/storage-class.png)
 
+<div style="page-break-after: always;"></div>
+
 The `Storage` component,
 
 * Can save job application data in **JSON format (`.json`)**, and read them back into corresponding `Application` objects.
